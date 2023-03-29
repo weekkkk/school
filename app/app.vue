@@ -1,34 +1,28 @@
 <template>
-    <div id="app"></div>
+    <div id="app">
+        <ui-table :data="data" />
+        <ui-button>ui-button</ui-button>
+        <ui-button thema="gray">ui-button gray</ui-button>
+        <ui-header-button>ui-header-button</ui-header-button>
+        <ui-input />
+    </div>
 </template>
 <script lang="ts" setup>
+const data =
+    [
+        ["Number", "String", "Boolean"],
+        ["1", "asd", "false"],
+        ["1", "asd", "false"],
+        ["1", "asd", "false"],
+        ["1", "asd", "false"],
+        ["1", "asd", "false"],
+        ["1", "asd", "false"],
+        ["1", "asd", "false"],
+    ]
 </script>
 <style lang="less">
 * {
     box-sizing: border-box;
-}
-
-html,
-body {
-    min-height: 100vh;
-
-    ::-webkit-scrollbar {
-        width: 1vw;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background: var(--red);
-
-        &:hover {
-            background: var(--light-red);
-        }
-    }
-
-    ::-webkit-scrollbar-track {
-        background: var(--black);
-    }
-
-
 }
 
 html,
