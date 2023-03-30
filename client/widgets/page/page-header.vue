@@ -5,8 +5,8 @@
             <div class="page-header-buttons">
                 <ui-header-button :route="routerName.MAIN">Главная</ui-header-button>
                 <ui-header-button :route="routerName.RESULTS">Просмотр результатов</ui-header-button>
-                <!-- <ui-header-button :route="routerName.MAIN">Создать тестирование</ui-header-button>
-                <ui-header-button :route="routerName.MAIN">Создать школу</ui-header-button>
+                <ui-header-button :route="routerName.CREATE_TEST">Создать тестирование</ui-header-button>
+                <!-- <ui-header-button :route="routerName.MAIN">Создать школу</ui-header-button>
                 <ui-header-button>Выход</ui-header-button> -->
             </div>
         </div>

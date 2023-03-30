@@ -3,6 +3,7 @@ import * as RouterName from "./router-names"
 import Layout from "../../pages/layout.vue"
 import MainPage from "../../pages/common/main-page.vue"
 import Results from "../../pages/common/results.vue"
+import CreateTest from "../../pages/admin/create-test.vue"
 
 const router = VueRouter.createRouter({
     history: VueRouter.createWebHistory(),
@@ -21,6 +22,11 @@ const router = VueRouter.createRouter({
                     name: RouterName.RESULTS,
                     path: `/${RouterName.RESULTS}`,
                     component: Results,
+                },
+                {
+                    name: RouterName.CREATE_TEST,
+                    path: `/${RouterName.CREATE_TEST}`,
+                    component: CreateTest,
                 }
             ]
         },

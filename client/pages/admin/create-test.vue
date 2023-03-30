@@ -1,20 +1,22 @@
 <template>
-    <div class="results">
+    <div class="create-test">
         <ui-label name="Школа">
             <ui-dropdown :items="items" :selectedId="selectedId" @select="selectedId = $event" />
         </ui-label>
         <ui-label name="Предмет">
             <ui-dropdown :items="items" :selectedId="selectedId" @select="selectedId = $event" />
         </ui-label>
-        <ui-label name="Вариант" borderBottom>
+        <ui-label name="Вариант">
             <ui-dropdown :items="items" :selectedId="selectedId" @select="selectedId = $event" />
         </ui-label>
-        <div class="show-results-button-wrapper">
-            <ui-button>
-                Показать результаты
+        <ui-label name="Файл" borderBottom>
+            <ui-button thema="gray" class="pin-file-button">
+                Прикрепить файл
             </ui-button>
-        </div>
-        <ui-table :data="data" />
+        </ui-label>
+        <ui-button class="create-test-button">
+            Создать тестирование
+        </ui-button>
     </div>
 </template>
 <script lang="ts" setup>
@@ -22,19 +24,15 @@ import { ref } from 'vue';
 
 const items = ref([])
 const selectedId = ref(0)
-const data =
-    [
-        ["ФИО", "Вариант 1", "Вариант 2", "Вариант 3", "Вариант 4"],
-        ["", "", "", "", ""],
-        ["", "", "", "", ""]
-    ]
 </script>
 <style lang="less" scoped>
-.results {
-    .show-results-button-wrapper {
-        display: flex;
-        margin: 16px 0 24px;
-        justify-content: flex-end;
+.create-test {
+    .pin-file-button {
+        margin-left: auto;
+    }
+
+    .create-test-button {
+        margin: 16px 0 0 auto;
     }
 }
 </style>
