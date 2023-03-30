@@ -1,24 +1,11 @@
 <template>
-    <page-header />
-    <page-wrapper class="page-wrapper">
-        1123
-    </page-wrapper>
+    <router-view />
 </template>
 <script lang="ts" setup>
 </script>
 <style lang="less">
 * {
     box-sizing: border-box;
-}
-
-body {
-    min-height: 100vh;
-    width: 100%;
-    background-color: var(--color-light-gray);
-
-    .page-wrapper {
-        margin-top: 16px;
-    }
 }
 
 html,
