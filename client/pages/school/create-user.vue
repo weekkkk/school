@@ -6,7 +6,7 @@
         <ui-label name="Email">
             <ui-input />
         </ui-label>
-        <ui-label name="Пароль">
+        <ui-label  name="Пароль" borderBottom>
             <ui-input />
         </ui-label>
         <div class="create-student-button-wrapper">
