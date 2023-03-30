@@ -11,56 +11,42 @@ const ApiError = require('../exceptions/api-error');
 class UserService {
   /**
    * * Создание пользователя
-   * @param email - почта
-   * @param password - пароль
    */
   async create(name, email, password) {
     const candidate = await User.findOne({ where: { email } });
     if (candidate) {
       throw ApiError.BadRequest(`Пользователь с email ${email} уже сущестует`);
     }
+
     const hashPassword = await bcrypt.hash(password, 3);
     const activationLink = await uuid.v4();
+
     const user = await User.create({
       name,
       email,
       password: hashPassword,
       activationLink,
     });
-    await mailService.sendActivationLink(
-      email,
-      `${process.env.API_URL}/api/authorization/activate/${activationLink}`
-    );
 
-    const tokens = tokenService.generateTokens({ ...user });
-    await tokenService.saveToken(user.id, tokens.refreshToken);
-
-    return {
-      ...tokens,
-      user,
-    };
+    return user;
   }
+
   /**
    * * Удалить пользователя
-   * @param refreshToken - уникальный токен пользователя
    */
-  async remove(refreshToken) {
-    const { userId } = tokenService.validateRefreshToken(refreshToken);
-
-    if (!userId) {
-      throw ApiError.UnauthorizedError();
-    }
-
-    const user = await User.findByPk(userId);
+  async remove(id) {
+    const user = await User.findByPk(id);
 
     if (!user) {
       throw ApiError.BadRequest(`Пользователь с id ${user} не найден`);
     }
 
-    const userData = await User.destroy({ where: { id: userId } });
-    const tokenData = await tokenService.removeToken(refreshToken);
-    return { userData, tokenData };
+    // удаление пользователя
+    await User.destroy({
+      where: { id },
+    });
   }
+
   /**
    * * Активация пользователя
    * @param activationLink - ссылка активации

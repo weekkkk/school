@@ -1,4 +1,6 @@
 const schoolService = require('../services/school-service');
+const userService = require('../services/user-service');
+
 const { validationResult } = require('express-validator');
 const ApiError = require('../exceptions/api-error');
 
@@ -16,14 +18,10 @@ class SchoolController {
       }
 
       const { name, email, password } = req.body;
-      const schoolData = await schoolService.create(name, email, password);
 
-      res.cookie('refreshToken', schoolData.refreshToken, {
-        maxAge: 30 * 24 * 60 * 60 * 1000,
-        httpOnly: true,
-      });
+      const {user, school} = await schoolService.create(name, email, password);
 
-      return res.json(schoolData);
+      return res.json({ user, school });
     } catch (e) {
       next(e);
     }
@@ -34,6 +32,11 @@ class SchoolController {
    */
   async remove(req, res, next) {
     try {
+      const { id } = req.params;
+
+      await schoolService.remove(id);
+
+      return res.json();
     } catch (e) {
       next(e);
     }

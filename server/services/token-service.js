@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const { Token, UserToken } = require('../models');
+const ApiError = require('../exceptions/api-error');
 
 class TokenService {
   /**
@@ -60,14 +61,25 @@ class TokenService {
     const userToken = await UserToken.create({ userId });
     return { ...userToken, ...token };
   }
+
   /**
    * * Удалить токен
    * @param refreshToken - токен, который нужно удалить
    */
-  async removeToken(refreshToken) {
-    const tokenData = await Token.destroy({ where: { refreshToken } });
-    return tokenData;
+  async removeToken(userId) {
+    // проверка наличия токена в базе
+    const userToken = await UserToken.findOne({ where: { userId } });
+    if (!userToken) {
+      throw ApiError.BadRequest(`У пользователя ${userId} нет refreshToken`);
+    }
+
+    // удалил токен пользователя
+    await UserToken.destroy({ where: { userId } });
+
+    // удалил токен
+    await Token.destroy({ where: { id: userToken.tokenId } });
   }
+
   /**
    * * Найти токен
    * @param refreshToken - токен, который нужно найти
