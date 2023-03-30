@@ -1,28 +1,24 @@
 <template>
-    <div id="app">
-        <ui-table :data="data" />
-        <ui-button>ui-button</ui-button>
-        <ui-button thema="gray">ui-button gray</ui-button>
-        <ui-header-button>ui-header-button</ui-header-button>
-        <ui-input />
-    </div>
+    <page-header />
+    <page-wrapper class="page-wrapper">
+        1123
+    </page-wrapper>
 </template>
 <script lang="ts" setup>
-const data =
-    [
-        ["Number", "String", "Boolean"],
-        ["1", "asd", "false"],
-        ["1", "asd", "false"],
-        ["1", "asd", "false"],
-        ["1", "asd", "false"],
-        ["1", "asd", "false"],
-        ["1", "asd", "false"],
-        ["1", "asd", "false"],
-    ]
 </script>
 <style lang="less">
 * {
     box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    width: 100%;
+    background-color: var(--color-light-gray);
+
+    .page-wrapper {
+        margin-top: 16px;
+    }
 }
 
 html,
