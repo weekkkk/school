@@ -6,9 +6,14 @@
     "forceConsistentCasingInFileNames": true,
     "strict": false,
     "strictPropertyInitialization": false,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "@assets": [
+        "./app/assets/*"
+      ]
+    }
   },
   "exclude": [
     "node_modules"
-  ]
+  ],
 }

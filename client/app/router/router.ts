@@ -1,24 +1,28 @@
 import * as VueRouter from 'vue-router'
-import Layout from "../../pages/layout.vue"
 import * as RouterName from "./router-names"
+import Layout from "../../pages/layout.vue"
+import Main from "../../pages/common/main.vue"
 
 const router = VueRouter.createRouter({
     history: VueRouter.createWebHistory(),
     routes: [
         {
             path: '/',
-            redirect: RouterName.MAIN
-        },
-        {
-            name: RouterName.MAIN,
-            path: `/${RouterName.MAIN}`,
             component: Layout,
-            // children: [
-            //     meta: {
-            //         accesses: [EnumRole.Admin]
-            //     }
-            // ]
-        }
+            redirect: `/${RouterName.MAIN}`,
+            children: [
+                {
+                    name: RouterName.MAIN,
+                    path: `/${RouterName.MAIN}`,
+                    component: Main,
+                }
+            ]
+        },
+        // children: [
+        //     meta: {
+        //         accesses: [EnumRole.Admin]
+        //     }
+        // ]
     ]
 })
 

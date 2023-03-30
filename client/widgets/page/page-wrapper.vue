@@ -12,6 +12,7 @@
     border-radius: var(--border-radius-default);
     width: 100%;
     margin: 0 auto;
-    max-width: var(--page-width)
+    max-width: var(--page-width);
+    position: relative;
 }
 </style>
