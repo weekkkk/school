@@ -1,5 +1,7 @@
+const SchoolDto = require('../dtos/school-dto');
 const ApiError = require('../exceptions/api-error');
 const { School, SchoolTeacher, SchoolStudent } = require('../models');
+const roleService = require('./role-service');
 const userService = require('./user-service');
 /**
  * * Сервис пользователя
@@ -9,13 +11,23 @@ class SchoolService {
    * * Создание школы
    */
   async create(name, email, password) {
+    // роль школы
+    const role = await roleService.getByName('SCHOOL');
+
+    if (!role) throw new ApiError('Добавьте в базу роль SCHOOL');
+
     // создал пользователя
-    const user = await userService.create(name, email, password);
+    const user = await userService.create(name, email, password, role);
+
+    // создал роль пользователя
+    const { userId } = await roleService.createUserRole(user.id, role.id);
 
     // создал школу
-    const school = await School.create({ userId: user.id });
+    const school = await School.create({ userId });
 
-    return { user, school };
+    const schoolData = new SchoolDto(school, user, role);
+
+    return schoolData;
   }
 
   /**
@@ -33,6 +45,18 @@ class SchoolService {
 
     // удалил пользователя
     await userService.remove(school.userId);
+  }
+
+  /**
+   * * Удаление школы
+   */
+  async getAll() {
+    // получил школы
+    const schools = await School.findAll();
+
+    // получил gjkmpjdfntkt
+
+    return schools;
   }
 }
 

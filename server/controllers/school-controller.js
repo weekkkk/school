@@ -1,5 +1,5 @@
 const schoolService = require('../services/school-service');
-const userService = require('../services/user-service');
+const SchoolDto = require('../dtos/school-dto');
 
 const { validationResult } = require('express-validator');
 const ApiError = require('../exceptions/api-error');
@@ -19,9 +19,13 @@ class SchoolController {
 
       const { name, email, password } = req.body;
 
-      const {user, school} = await schoolService.create(name, email, password);
+      const schoolData = await schoolService.create(
+        name,
+        email,
+        password
+      );
 
-      return res.json({ user, school });
+      return res.json(schoolData);
     } catch (e) {
       next(e);
     }
@@ -43,19 +47,9 @@ class SchoolController {
   }
 
   /**
-   * * Получить одну школу
-   */
-  async getSchool(req, res, next) {
-    try {
-    } catch (e) {
-      next(e);
-    }
-  }
-
-  /**
    * * Получить все школы
    */
-  async getSchools(req, res, next) {
+  async getAll(req, res, next) {
     try {
     } catch (e) {
       next(e);
