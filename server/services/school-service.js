@@ -1,6 +1,6 @@
 const SchoolDto = require('../dtos/school-dto');
 const ApiError = require('../exceptions/api-error');
-const { School, SchoolTeacher, SchoolStudent } = require('../models');
+const { School, SchoolTeacher, SchoolStudent, User } = require('../models');
 const roleService = require('./role-service');
 const userService = require('./user-service');
 /**
@@ -45,6 +45,33 @@ class SchoolService {
 
     // удалил пользователя
     await userService.remove(school.userId);
+  }
+
+  /**
+   * * Изменение школы
+   */
+  async edit(id, name, password) {
+    // школа
+    const school = await School.findByPk(id);
+
+    if (!school) {
+      throw ApiError.BadRequest(`Школа с id ${id} не найдена`);
+    }
+
+    // пользователь
+    const user = await User.findByPk(school.userId);
+
+    user.name = name;
+    user.password = password;
+
+    await user.save();
+
+    // роль школы
+    const role = await roleService.getByName('SCHOOL');
+
+    const schoolData = new SchoolDto(school, user, role);
+
+    return schoolData;
   }
 
   /**

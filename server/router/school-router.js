@@ -20,4 +20,14 @@ router.post(
  */
 router.delete('/:id', schoolController.remove);
 
+/**
+ * * Редактирование школы
+ */
+router.post(
+  '/:id',
+  body('name').isLength({ min: 5, max: 32 }),
+  body('password').isLength({ min: 3, max: 32 }),
+  schoolController.edit
+);
+
 module.exports = router;

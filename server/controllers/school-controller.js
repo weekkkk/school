@@ -19,11 +19,7 @@ class SchoolController {
 
       const { name, email, password } = req.body;
 
-      const schoolData = await schoolService.create(
-        name,
-        email,
-        password
-      );
+      const schoolData = await schoolService.create(name, email, password);
 
       return res.json(schoolData);
     } catch (e) {
@@ -41,6 +37,29 @@ class SchoolController {
       await schoolService.remove(id);
 
       return res.json();
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  /**
+   * * Изменить школу
+   */
+  async edit(req, res, next) {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return next(
+          ApiError.BadRequest('Ошибка при валидации', errors.array())
+        );
+      }
+
+      const { id } = req.params;
+      const { name, password } = req.body;
+
+      const schoolData = await schoolService.edit(id, name, password);
+
+      return res.json(schoolData);
     } catch (e) {
       next(e);
     }

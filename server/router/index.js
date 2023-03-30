@@ -6,6 +6,6 @@ const roleRouter = require('./role-router');
 
 
 router.use('/school', schoolRouter);
-// router.use('/role', roleRouter);
+router.use('/role', roleRouter);
 
 module.exports = router;
