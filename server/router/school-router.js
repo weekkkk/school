@@ -30,4 +30,14 @@ router.post(
   schoolController.edit
 );
 
+/**
+ * * Получить школы
+ */
+router.get('/',schoolController.getAll);
+
+/**
+ * * Получить школу
+ */
+router.get('/:id', schoolController.getById);
+
 module.exports = router;

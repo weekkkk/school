@@ -70,6 +70,21 @@ class SchoolController {
    */
   async getAll(req, res, next) {
     try {
+      const schoolsData = await schoolService.getAll();
+      return res.json(schoolsData);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  /**
+   * * Получить школу по id
+   */
+  async getById(req, res, next) {
+    try {
+      const {id} = req.params
+      const schoolData = await schoolService.getById(id);
+      return res.json(schoolData);
     } catch (e) {
       next(e);
     }

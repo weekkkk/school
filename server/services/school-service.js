@@ -59,12 +59,7 @@ class SchoolService {
     }
 
     // пользователь
-    const user = await User.findByPk(school.userId);
-
-    user.name = name;
-    user.password = password;
-
-    await user.save();
+    const user = await userService.edit(id, name, password);
 
     // роль школы
     const role = await roleService.getByName('SCHOOL');
@@ -75,15 +70,40 @@ class SchoolService {
   }
 
   /**
-   * * Удаление школы
+   * * Получить все школы
    */
   async getAll() {
+    // роль школы
+    const role = await roleService.getByName('SCHOOL');
+
     // получил школы
     const schools = await School.findAll();
 
-    // получил gjkmpjdfntkt
+    const schoolsData = [];
+    for (let school of schools) {
+      const user = await userService.getById(school.userId);
+      const schoolData = new SchoolDto(school, user, role);
+      schoolsData.push(schoolData);
+    }
 
-    return schools;
+    return schoolsData;
+  }
+
+  /**
+   * * Получить все школы
+   */
+  async getById(id) {
+    // роль школы
+    const role = await roleService.getByName('SCHOOL');
+
+    // получил школу
+    const school = await School.findByPk(id);
+
+    const user = await userService.getById(school.userId);
+
+    const schoolData = new SchoolDto(school, user, role);
+
+    return schoolData;
   }
 }
 

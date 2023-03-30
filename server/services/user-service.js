@@ -46,6 +46,32 @@ class UserService {
       where: { id },
     });
   }
+
+  /**
+   * * Изменить пользователя
+   */
+  async edit(id, name, password) {
+    const user = await User.findByPk(id);
+
+    if (!user) {
+      throw ApiError.BadRequest(`Пользователь с id ${user} не найден`);
+    }
+
+    user.name = name;
+    user.password = password;
+
+    await user.save();
+
+    return user;
+  }
+
+  /**
+   * * Получить по id
+   */
+  async getById(id) {
+    const user = await User.findByPk(id);
+    return user;
+  }
 }
 
 module.exports = new UserService();
