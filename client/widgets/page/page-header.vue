@@ -3,18 +3,20 @@
         <div class="page-header-content">
             <div class="page-header-title">Тестирование ЕГЭ</div>
             <div class="page-header-buttons">
-                <ui-header-button>Главная</ui-header-button>
-                <ui-header-button>Тестирование</ui-header-button>
-                <ui-header-button>Ответы</ui-header-button>
-                <ui-header-button>Результаты</ui-header-button>
-                <ui-header-button>Материалы</ui-header-button>
-                <ui-header-button>Выход</ui-header-button>
+                <ui-header-button :route="routerName.MAIN">Главная</ui-header-button>
+                <ui-header-button :route="routerName.RESULTS">Просмотр результатов</ui-header-button>
+                <!-- <ui-header-button :route="routerName.MAIN">Создать тестирование</ui-header-button>
+                <ui-header-button :route="routerName.MAIN">Создать школу</ui-header-button>
+                <ui-header-button>Выход</ui-header-button> -->
             </div>
         </div>
         <slot />
     </div>
 </template>
 <script lang="ts" setup>
+import * as RouterName from "../../app/router/router-names"
+
+const routerName = RouterName;
 </script>
 <style lang="less">
 .page-header {

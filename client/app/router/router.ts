@@ -1,7 +1,8 @@
 import * as VueRouter from 'vue-router'
 import * as RouterName from "./router-names"
 import Layout from "../../pages/layout.vue"
-import Main from "../../pages/common/main.vue"
+import MainPage from "../../pages/common/main-page.vue"
+import Results from "../../pages/common/results.vue"
 
 const router = VueRouter.createRouter({
     history: VueRouter.createWebHistory(),
@@ -14,7 +15,12 @@ const router = VueRouter.createRouter({
                 {
                     name: RouterName.MAIN,
                     path: `/${RouterName.MAIN}`,
-                    component: Main,
+                    component: MainPage,
+                },
+                {
+                    name: RouterName.RESULTS,
+                    path: `/${RouterName.RESULTS}`,
+                    component: Results,
                 }
             ]
         },
