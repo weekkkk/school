@@ -59,7 +59,7 @@ class SchoolService {
     }
 
     // пользователь
-    const user = await userService.edit(id, name, password);
+    const user = await userService.edit(school.userId, name, password);
 
     // роль школы
     const role = await roleService.getByName('SCHOOL');

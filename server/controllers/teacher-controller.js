@@ -1,10 +1,10 @@
-const schoolService = require('../services/school-service');
-const SchoolDto = require('../dtos/school-dto');
+const teacherService = require('../services/teacher-service');
+const TeacherDto = require('../dtos/teacher-dto');
 
 const { validationResult } = require('express-validator');
 const ApiError = require('../exceptions/api-error');
 
-class SchoolController {
+class TeacherController {
   /**
    * * Создать
    */
@@ -17,11 +17,16 @@ class SchoolController {
         );
       }
 
-      const { name, email, password } = req.body;
+      const { name, email, password, schoolId } = req.body;
 
-      const schoolData = await schoolService.create(name, email, password);
+      const teacherData = await teacherService.create(
+        name,
+        email,
+        password,
+        schoolId
+      );
 
-      return res.json(schoolData);
+      return res.json(teacherData);
     } catch (e) {
       next(e);
     }
@@ -34,7 +39,7 @@ class SchoolController {
     try {
       const { id } = req.params;
 
-      await schoolService.remove(id);
+      await teacherService.remove(id);
 
       return res.json();
     } catch (e) {
@@ -57,9 +62,9 @@ class SchoolController {
       const { id } = req.params;
       const { name, password } = req.body;
 
-      const schoolData = await schoolService.edit(id, name, password);
+      const teacherData = await teacherService.edit(id, name, password);
 
-      return res.json(schoolData);
+      return res.json(teacherData);
     } catch (e) {
       next(e);
     }
@@ -70,8 +75,21 @@ class SchoolController {
    */
   async getAll(req, res, next) {
     try {
-      const schoolsData = await schoolService.getAll();
-      return res.json(schoolsData);
+      const teachersData = await teacherService.getAll();
+      return res.json(teachersData);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  /**
+   * * Получить всех учителей школы
+   */
+  async getSchoolTeachers(req, res, next) {
+    try {
+      const { id } = req.params;
+      const teachersData = await teacherService.getAllBySchoolId(id);
+      return res.json(teachersData);
     } catch (e) {
       next(e);
     }
@@ -83,12 +101,12 @@ class SchoolController {
   async getById(req, res, next) {
     try {
       const { id } = req.params;
-      const schoolData = await schoolService.getById(id);
-      return res.json(schoolData);
+      const teacherData = await teacherService.getById(id);
+      return res.json(teacherData);
     } catch (e) {
       next(e);
     }
   }
 }
 
-module.exports = new SchoolController();
+module.exports = new TeacherController();

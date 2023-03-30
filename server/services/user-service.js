@@ -54,7 +54,7 @@ class UserService {
     const user = await User.findByPk(id);
 
     if (!user) {
-      throw ApiError.BadRequest(`Пользователь с id ${user} не найден`);
+      throw ApiError.BadRequest(`Пользователь с id ${id} не найден`);
     }
 
     user.name = name;
