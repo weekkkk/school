@@ -5,7 +5,7 @@ const { roleService } = require('../role');
 const { userRoleService } = require('./role');
 
 class UserService {
-  async create(name, email, password, roleId) {
+  async create(name, email, password) {
     const candidate = User.findOne({ where: { email } });
     if (candidate) {
       throw ApiError.BadRequest(
