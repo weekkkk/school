@@ -3,15 +3,19 @@ require('dotenv').config();
 const express = require('express');
 const sequelize = require('./db');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const errorMiddleware = require('./middlewares/error-middleware');
 
-const models = require('./models')
+const router = require('./router');
+
+const models = require('./models');
 
 const PORT = process.env.PORT || 4000;
 
 const app = express();
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
@@ -20,6 +24,7 @@ app.use(
     },
   })
 );
+app.use('/api', router);
 
 // Обработка ошибок, последний Middleware
 app.use(errorMiddleware);

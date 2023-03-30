@@ -9,6 +9,21 @@ const User = sequelize.define('user', {
   name: { type: DataTypes.STRING },
   email: { type: DataTypes.STRING, unique: true },
   password: { type: DataTypes.STRING },
+  isActivated: { type: DataTypes.BOOLEAN, defaultValue: false },
+  activationLink: { type: DataTypes.STRING },
+});
+/**
+ * * Токен
+ */
+const Token = sequelize.define('token', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  refreshToken: { type: DataTypes.STRING(5000), unique: true },
+});
+/**
+ * * Токен пользователя
+ */
+const UserToken = sequelize.define('userToken', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
 /**
  * * Роль
@@ -153,6 +168,12 @@ const StudentAnswer = sequelize.define('studentAnswer', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
 
+User.hasOne(UserToken);
+UserToken.belongsTo(User);
+
+Token.hasOne(UserToken);
+UserToken.belongsTo(Token);
+
 User.hasOne(UserRole);
 UserRole.belongsTo(User);
 
@@ -227,3 +248,30 @@ StudentAnswer.belongsTo(Answer);
 
 Answer.hasOne(ClassroomTestAnswer);
 ClassroomTestAnswer.belongsTo(Answer);
+
+module.exports = {
+  Admin,
+  Answer,
+  Classroom,
+  ClassroomStudent,
+  ClassroomTest,
+  ClassroomTestAnswer,
+  Material,
+  Role,
+  School,
+  SchoolStudent,
+  SchoolTeacher,
+  Student,
+  StudentAnswer,
+  Subject,
+  Teacher,
+  TeacherClassroom,
+  TeacherMaterial,
+  TeacherSubject,
+  Test,
+  TestSubject,
+  Token,
+  User,
+  UserRole,
+  UserToken,
+};
