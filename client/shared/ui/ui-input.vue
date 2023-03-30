@@ -19,6 +19,7 @@ const onInput = () => emit("update:modelValue", innerValue.value);
 </script>
 <style lang="less" scoped>
 .ui-input {
+    width: 100%;
     outline: none;
     height: 40px;
     border: 1px solid var(--color-gray);

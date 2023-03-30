@@ -1,9 +1,13 @@
 <template>
     <div class="ui-table">
         <div v-for="(row, index) in rows" class="ui-table-row" :class="getRowClass(index)">
-            <div v-for="cell in row" class="ui-table-cell">
+            <div v-for="cell in row" class="ui-table-cell" :style="cellStyle">
                 {{ cell }}
             </div>
+            <template v-if="showButtons">
+                <div class="ui-table-cell" :style="cellStyle">{{ index ? "Удалить" : "" }}</div>
+                <div class="ui-table-cell" :style="cellStyle">{{ index ? "Изменить" : "" }}</div>
+            </template>
         </div>
     </div>
 </template>
@@ -20,7 +24,9 @@ const props = defineProps({
      *  ["Value"]
      * ]
      */
-    data: { type: Array as PropType<string[][]>, default: () => [] }
+    data: { type: Array as PropType<string[][]>, default: () => [] },
+    /**Показывать кнопки для редактирования и удаления элементов */
+    showButtons: { type: Boolean, default: false }
 })
 
 /**Обрезанные по длине первого массива строки */
@@ -29,6 +35,15 @@ const rows = computed(() => {
     let rowLength = props.data[0].length;
     return props.data.map(d => d.filter((x, i) => i < rowLength));
 })
+/**Количество ячеек */
+const cellsCount = computed(() => {
+    let additionalCells = props.showButtons ? 2 : 0;
+    return rows.value[0].length + additionalCells;
+})
+/**Стили для ячейки */
+const cellStyle = computed(() => ({
+    "min-width": 100 / cellsCount.value + "%"
+}))
 
 /**Получение класса для ряда */
 const getRowClass = (index: number) => {
@@ -70,6 +85,7 @@ const getRowClass = (index: number) => {
             min-height: 40px;
             width: 100%;
             background-color: var(--color-default);
+            overflow: hidden;
         }
     }
 }

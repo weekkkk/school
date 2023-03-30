@@ -6,8 +6,9 @@
                 <ui-header-button :route="routerName.MAIN">Главная</ui-header-button>
                 <ui-header-button :route="routerName.RESULTS">Просмотр результатов</ui-header-button>
                 <ui-header-button :route="routerName.CREATE_TEST">Создать тестирование</ui-header-button>
-                <!-- <ui-header-button :route="routerName.MAIN">Создать школу</ui-header-button>
-                <ui-header-button>Выход</ui-header-button> -->
+                <ui-header-button :route="routerName.CREATE_USER">Создать пользователя</ui-header-button>
+                <ui-header-button :route="routerName.CREATE_SCHOOL">Создать школу</ui-header-button>
+                <ui-header-button>Выход</ui-header-button>
             </div>
         </div>
         <slot />
@@ -25,13 +26,14 @@ const routerName = RouterName;
     height: 64px;
     background-color: #fff;
     color: var(--color-text);
+    padding: 0 24px;
 
     .page-header-content {
-        width: 100%;
-        max-width: var(--page-width);
+        min-width: var(--page-width);
         display: flex;
         justify-content: space-between;
         align-items: center;
+        gap: 24px;
 
         .page-header-title {
             font-weight: 600;
