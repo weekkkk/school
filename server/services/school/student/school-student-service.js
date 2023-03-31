@@ -1,5 +1,5 @@
 const { SchoolStudent } = require('../../../models');
-const ApiError = require('../../exceptions/api-error');
+const ApiError = require('../../../exceptions/api-error');
 
 class SchoolStudentService {
   async create(schoolId, studentId) {

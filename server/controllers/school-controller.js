@@ -1,90 +1,49 @@
-const schoolService = require('../services/school-service');
-const SchoolDto = require('../dtos/school-dto');
-
-const { validationResult } = require('express-validator');
 const ApiError = require('../exceptions/api-error');
+const { schoolService } = require('../services/school');
 
 class SchoolController {
-  /**
-   * * Создать
-   */
   async create(req, res, next) {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return next(
-          ApiError.BadRequest('Ошибка при валидации', errors.array())
-        );
-      }
-
       const { name, email, password } = req.body;
 
-      const schoolData = await schoolService.create(name, email, password);
+      const data = await schoolService.create(name, email, password);
 
-      return res.json(schoolData);
+      return res.json(data);
     } catch (e) {
       next(e);
     }
   }
 
-  /**
-   * * Удалить
-   */
-  async remove(req, res, next) {
+  async update(req, res, next) {
     try {
-      const { id } = req.params;
-
-      await schoolService.remove(id);
-
-      return res.json();
-    } catch (e) {
-      next(e);
-    }
-  }
-
-  /**
-   * * Изменить
-   */
-  async edit(req, res, next) {
-    try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return next(
-          ApiError.BadRequest('Ошибка при валидации', errors.array())
-        );
-      }
-
       const { id } = req.params;
       const { name, password } = req.body;
 
-      const schoolData = await schoolService.edit(id, name, password);
+      const data = await schoolService.update(id, name, password);
 
-      return res.json(schoolData);
+      return res.json(data);
     } catch (e) {
       next(e);
     }
   }
 
-  /**
-   * * Получить все
-   */
-  async getAll(req, res, next) {
-    try {
-      const schoolsData = await schoolService.getAll();
-      return res.json(schoolsData);
-    } catch (e) {
-      next(e);
-    }
-  }
-
-  /**
-   * * Получить по id
-   */
-  async getById(req, res, next) {
+  async delete(req, res, next) {
     try {
       const { id } = req.params;
-      const schoolData = await schoolService.getById(id);
-      return res.json(schoolData);
+
+      const data = schoolService.delete(id);
+
+      return res.json(data);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async getAll(req, res, next) {
+    try {
+      const data = await schoolService.getAll();
+
+      return res.json(data);
     } catch (e) {
       next(e);
     }

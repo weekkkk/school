@@ -2,24 +2,17 @@ const { School } = require('../../models');
 const ApiError = require('../../exceptions/api-error');
 
 const { userService } = require('../user');
-const { roleService } = require('../role');
 const { schoolTeacherService } = require('./teacher');
 const { schoolStudentService } = require('./student');
 
 class SchoolService {
   async create(name, email, password) {
-    const role = await roleService.getByName('SCHOOL');
+    const role = 'SCHOOL';
+    const user = await userService.create(name, email, password, role);
 
-    const { user, userRole } = await userService.create(
-      name,
-      email,
-      password,
-      role.id
-    );
+    const school = await School.create({ userId: user.id });
 
-    const school = School.create({ userId: user.id });
-
-    return { school, user, userRole };
+    return { school, user };
   }
 
   async update(id, name, password) {
@@ -29,7 +22,7 @@ class SchoolService {
       throw ApiError.BadRequest(`Школа с id ${id} не зарегистрирована`);
     }
 
-    const user = await userService.update(name, password);
+    const user = await userService.update(school.userId, name, password);
 
     return { school, user };
   }
@@ -61,17 +54,22 @@ class SchoolService {
   async getAll() {
     const schools = await School.findAll();
 
-    return schools;
+    const schoolsData = [];
+
+    for (let school of schools) {
+      const user = await userService.getById(school.userId);
+      schoolsData.push({ user, school });
+    }
+
+    return schoolsData;
   }
 
   async getById(id) {
     const school = await School.findByPk(id);
 
-    if (!school) {
-      throw ApiError.BadRequest(`Школа с id ${id} не зарегистрирована`);
-    }
+    const user = await userService.getById(school.userId);
 
-    return school;
+    return { school, user };
   }
 }
 
