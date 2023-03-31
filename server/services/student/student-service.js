@@ -3,7 +3,7 @@ const ApiError = require('../../exceptions/api-error');
 
 const { userService } = require('../user');
 const { roleService } = require('../role');
-const { studentStudentService } = require('../student');
+const { schoolStudentService } = require('../school');
 
 class StudentService {
   async create(name, email, password, studentId) {
@@ -18,12 +18,12 @@ class StudentService {
 
     const student = Student.create({ userId: user.id });
 
-    const studentStudent = await studentStudentService.create(
+    const schoolStudent = await schoolStudentService.create(
       studentId,
       student
     );
 
-    return { student, user, userRole, studentStudent };
+    return { student, user, userRole, schoolStudent };
   }
 
   async update(id, name, password) {
@@ -46,7 +46,7 @@ class StudentService {
     }
 
     try {
-      await studentStudentService.deleteStudent(id);
+      await schoolStudentService.deleteStudent(id);
     } catch (e) {
       console.log(e);
     }

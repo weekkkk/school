@@ -13,6 +13,15 @@ class SchoolTeacherService {
     return schoolTeacher;
   }
 
+  async deleteteacher(teacherId) {
+    const schoolTeacher = await SchoolTeacher.findOne({ teacherId });
+    if (!schoolTeacher) {
+      throw ApiError.BadRequest(`Учитель с id ${teacherId} не имеет учителей`);
+    }
+
+    await SchoolTeacher.destroy({ where: { teacherId } });
+  }
+
   async deleteSchool(schoolId) {
     const schoolTeacher = await SchoolTeacher.findOne({ schoolId });
     if (!schoolTeacher) {
