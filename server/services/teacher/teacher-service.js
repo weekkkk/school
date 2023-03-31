@@ -4,9 +4,10 @@ const ApiError = require('../../exceptions/api-error');
 const { userService } = require('../user');
 const { roleService } = require('../role');
 const { schoolTeacherService } = require('../school');
+const { classroomTeacherService } = require('../classroom');
 
 class TeacherService {
-  async create(name, email, password, teacherId) {
+  async create(name, email, password, schoolId) {
     const role = await roleService.getByName('TEACHER');
 
     const { user, userRole } = await userService.create(
@@ -18,10 +19,7 @@ class TeacherService {
 
     const teacher = Teacher.create({ userId: user.id });
 
-    const schoolTeacher = await schoolTeacherService.create(
-      teacherId,
-      teacher
-    );
+    const schoolTeacher = await schoolTeacherService.create(schoolId, teacher);
 
     return { teacher, user, userRole, schoolTeacher };
   }
@@ -43,6 +41,12 @@ class TeacherService {
 
     if (!teacher) {
       throw ApiError.BadRequest(`Учитель с id ${id} не зарегистрирован`);
+    }
+
+    try {
+      await classroomTeacherService.deleteTeacher(id);
+    } catch (e) {
+      console.log(e);
     }
 
     try {
