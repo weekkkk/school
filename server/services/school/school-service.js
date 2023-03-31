@@ -42,13 +42,13 @@ class SchoolService {
     }
 
     try {
-      await schoolTeacherService.delete(id);
+      await schoolTeacherService.deleteSchool(id);
     } catch (e) {
       console.log(e);
     }
 
     try {
-      await schoolStudentService.delete(id);
+      await schoolStudentService.deleteSchool(id);
     } catch (e) {
       console.log(e);
     }
@@ -56,6 +56,22 @@ class SchoolService {
     await School.destroy({ where: { id } });
 
     await userService.delete(school.userId);
+  }
+
+  async getAll() {
+    const schools = await School.findAll();
+
+    return schools;
+  }
+
+  async getById(id) {
+    const school = await School.findByPk(id);
+
+    if (!school) {
+      throw ApiError.BadRequest(`Школа с id ${id} не зарегистрирована`);
+    }
+
+    return school;
   }
 }
 

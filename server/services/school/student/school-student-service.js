@@ -13,7 +13,16 @@ class SchoolStudentService {
     return schoolStudent;
   }
 
-  async delete(schoolId) {
+  async deleteStudent(studentId) {
+    const schoolStudent = await SchoolStudent.findOne({ studentId });
+    if (!schoolStudent) {
+      throw ApiError.BadRequest(`Ученик с id ${studentId} не имеет школы`);
+    }
+
+    await SchoolStudent.destroy({ where: { studentId } });
+  }
+  
+  async deleteSchool(schoolId) {
     const schoolStudent = await SchoolStudent.findOne({ schoolId });
     if (!schoolStudent) {
       throw ApiError.BadRequest(`Школа с id ${schoolId} не имеет учеников`);
