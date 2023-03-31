@@ -5,6 +5,7 @@ const { userService } = require('../user');
 const { roleService } = require('../role');
 const { schoolStudentService } = require('../school');
 const { classroomStudentService } = require('../classroom');
+const { answerStudentService } = require('../answer');
 
 class StudentService {
   async create(name, email, password, schoolId) {
@@ -41,6 +42,12 @@ class StudentService {
 
     if (!student) {
       throw ApiError.BadRequest(`Ученик с id ${id} не зарегистрирован`);
+    }
+
+    try {
+      await answerStudentService.deleteStudent(id);
+    } catch (e) {
+      console.log(e);
     }
 
     try {

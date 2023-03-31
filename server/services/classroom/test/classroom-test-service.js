@@ -1,5 +1,6 @@
 const { ClassroomTest } = require('../../../models');
 const ApiError = require('../../../exceptions/api-error');
+const { answerClassroomTestService } = require('../../answer');
 
 class ClassroomTestService {
   async create(classrooId, testId) {
@@ -35,6 +36,12 @@ class ClassroomTestService {
     const classroomTest = await ClassroomTest.findOne({ where: { testId } });
     if (!classroomTest) {
       throw ApiError.BadRequest(`Тест с id ${testId} не найден`);
+    }
+
+    try {
+      await answerClassroomTestService.deleteClassroomTest(classroomTest.id);
+    } catch (e) {
+      console.log(e);
     }
 
     await ClassroomTest.destroy({ where: { classrooId } });
