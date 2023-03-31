@@ -6,6 +6,7 @@ const path = require('path');
 const fs = require('fs');
 
 const { subjectTestService } = require('../subject');
+const { classroomTestService } = require('../classroom');
 
 class TestService {
   async create(name, file, subjectId) {
@@ -49,7 +50,17 @@ class TestService {
       throw ApiError.BadRequest(`Тест с id ${id} не существует`);
     }
 
-    await subjectTestService.deleteTest(id);
+    try {
+      await subjectTestService.deleteTest(id);
+    } catch (e) {
+      console.log(e);
+    }
+
+    try {
+      await classroomTestService.deleteTest(id);
+    } catch (e) {
+      classroomTestService.deleteTest(id);
+    }
 
     await Test.destroy({ where: { id } });
 

@@ -2,6 +2,7 @@ const { Classroom } = require('../../models');
 const ApiError = require('../../exceptions/api-error');
 
 const { classroomTeacherService } = require('./teacher');
+const { classroomTestService } = require('./test');
 
 class ClassroomService {
   async create(name, teacherId) {
@@ -36,7 +37,17 @@ class ClassroomService {
       throw ApiError.BadRequest(`Класс с id ${id} не зарегистрирован`);
     }
 
-    await classroomTeacherService.deleteClassroom(id);
+    try {
+      await classroomTestService.deleteClassroom(id);
+    } catch (e) {
+      classroomTestService.deleteClassroom(id);
+    }
+
+    try {
+      await classroomTeacherService.deleteClassroom(id);
+    } catch (e) {
+      classroomTeacherService.deleteTest(id);
+    }
 
     await Classroom.destroy(id);
   }
