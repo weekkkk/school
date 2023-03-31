@@ -166,6 +166,7 @@ const ClassroomTestAnswer = sequelize.define('classroomTestAnswer', {
  */
 const StudentAnswer = sequelize.define('studentAnswer', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  grade: { type: DataTypes.INTEGER },
 });
 
 User.hasOne(UserToken);

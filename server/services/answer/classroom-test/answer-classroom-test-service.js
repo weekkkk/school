@@ -1,4 +1,4 @@
-const { ClassroomTestAnswer } = require('../../../models');
+const { ClassroomTestAnswer, Answer } = require('../../../models');
 const ApiError = require('../../../exceptions/api-error');
 
 class AnswerClassroomTestService {
@@ -28,6 +28,10 @@ class AnswerClassroomTestService {
 
     await ClassroomTestAnswer.destroy({
       where: { classroomTestId },
+    });
+
+    await Answer.destroy({
+      where: { id: answerClassroomTest.answerId },
     });
   }
 

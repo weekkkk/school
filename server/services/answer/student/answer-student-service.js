@@ -1,4 +1,4 @@
-const { StudentAnswer } = require('../../../models');
+const { StudentAnswer, Answer } = require('../../../models');
 const ApiError = require('../../../exceptions/api-error');
 
 class AnswerStudentService {
@@ -13,6 +13,17 @@ class AnswerStudentService {
     return answerStudent;
   }
 
+  async setGrade(id, grade) {
+    const answerStudent = await StudentAnswer.findByPk(id);
+    if (!answerStudent) {
+      throw ApiError.BadRequest(`Ответ с id ${id} не найден`);
+    }
+
+    answerStudent.grade = grade;
+
+    return answerStudent;
+  }
+
   async deleteStudent(studentId) {
     const answerStudent = await StudentAnswer.findOne({
       where: { studentId },
@@ -21,8 +32,12 @@ class AnswerStudentService {
       throw ApiError.BadRequest(`Ученик id ${subjectId} не создан`);
     }
 
-    await TestSubject.destroy({
+    await StudentAnswer.destroy({
       where: { studentId },
+    });
+
+    await Answer.destroy({
+      where: { id: answerStudent.answerId },
     });
   }
 
@@ -34,7 +49,7 @@ class AnswerStudentService {
       throw ApiError.BadRequest(`Ответ id ${answerId} не создан`);
     }
 
-    await TestSubject.destroy({
+    await StudentAnswer.destroy({
       where: { answerId },
     });
   }
