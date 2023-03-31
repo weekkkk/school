@@ -1,4 +1,4 @@
-const { User } = require('../../models');
+const { User, UserRole } = require('../../models');
 const ApiError = require('../../exceptions/api-error');
 
 const { roleService } = require('../role');
@@ -17,9 +17,38 @@ class UserService {
 
     const role = await roleService.getById(roleId);
 
-    const userRole = userRoleService.create(user.id, role.id);
+    const userRole = await userRoleService.create(user.id, role.id);
 
     return { user, userRole };
+  }
+
+  async update(id, name, password) {
+    const user = User.findByPk(id);
+    if (!user) {
+      throw ApiError.BadRequest(`Пользователь с id ${id} не зарегистрирован`);
+    }
+
+    if (name) {
+      user.name = name;
+    }
+    if (password) {
+      user.password = password;
+    }
+
+    await user.save();
+
+    return user;
+  }
+
+  async delete(id) {
+    const user = User.findByPk(id);
+    if (!user) {
+      throw ApiError.BadRequest(`Пользователь с id ${id} не зарегистрирован`);
+    }
+
+    await userRoleService.delete(id);
+
+    await User.destroy({ where: { id } });
   }
 }
 

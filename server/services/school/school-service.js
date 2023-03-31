@@ -1,26 +1,62 @@
-const { User } = require('../../models');
+const { School } = require('../../models');
 const ApiError = require('../../exceptions/api-error');
 
+const { userService } = require('../user');
 const { roleService } = require('../role');
-const { userRoleService } = require('./role');
+const { schoolTeacherService } = require('./teacher');
+const { schoolStudentService } = require('./student');
 
-class UserService {
+class SchoolService {
   async create(name, email, password) {
-    const candidate = User.findOne({ where: { email } });
-    if (candidate) {
-      throw ApiError.BadRequest(
-        `Пользователь с email ${email} уже зарегестрирован`
-      );
+    const role = await roleService.getByName('SCHOOL');
+
+    const { user, userRole } = await userService.create(
+      name,
+      email,
+      password,
+      role.id
+    );
+
+    const school = School.create({ userId: user.id });
+
+    return { school, user, userRole };
+  }
+
+  async update(id, name, password) {
+    const school = await School.findByPk(id);
+
+    if (!school) {
+      throw ApiError.BadRequest(`Школа с id ${id} не зарегистрирована`);
     }
 
-    const user = await User.create({ name, email, password });
+    const user = await userService.update(name, password);
 
-    const role = await roleService.getById(roleId);
+    return { school, user };
+  }
 
-    const userRole = userRoleService.create(user.id, role.id);
+  async delete(id) {
+    const school = await School.findByPk(id);
 
-    return { user, userRole };
+    if (!school) {
+      throw ApiError.BadRequest(`Школа с id ${id} не зарегистрирована`);
+    }
+
+    try {
+      await schoolTeacherService.delete(id);
+    } catch (e) {
+      console.log(e);
+    }
+
+    try {
+      await schoolStudentService.delete(id);
+    } catch (e) {
+      console.log(e);
+    }
+
+    await School.destroy({ where: { id } });
+
+    await userService.delete(school.userId);
   }
 }
 
-module.exports = new UserService();
+module.exports = new SchoolService();

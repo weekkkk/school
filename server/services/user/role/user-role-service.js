@@ -10,8 +10,19 @@ class UserRoleService {
       );
     }
 
-    const userRole = UserRole.create({ userId, roleId });
+    const userRole = await UserRole.create({ userId, roleId });
     return userRole;
+  }
+
+  async delete(userId) {
+    const role = UserRole.findOne({ where: { userId } });
+    if (!role) {
+      throw ApiError.BadRequest(
+        `Пользователь с userId ${userId} не имеет роль`
+      );
+    }
+
+    await UserRole.destroy({ userId, roleId });
   }
 }
 
