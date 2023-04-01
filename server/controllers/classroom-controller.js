@@ -1,5 +1,8 @@
 const ApiError = require('../exceptions/api-error');
-const { classroomService } = require('../services/classroom');
+const {
+  classroomService,
+  classroomStudentService,
+} = require('../services/classroom');
 
 class ClassroomController {
   async create(req, res, next) {
@@ -45,6 +48,38 @@ class ClassroomController {
       const { teacherId } = req.params;
 
       const data = await classroomService.getTeacher(teacherId);
+
+      return res.json(data);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async addStudents(req, res, next) {
+    try {
+      const { classroomId } = req.params;
+      const { studentIds } = req.body;
+
+      const classroomStudentsData = [];
+      for (let studentId of studentIds) {
+        const classroomStudent = await classroomStudentService.create(
+          classroomId,
+          studentId
+        );
+        classroomStudentsData.push(classroomStudent);
+      }
+
+      return res.json(classroomStudentsData);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async removeStudent(req, res, next) {
+    try {
+      const { classroomId, studentId } = req.params;
+
+      const data = await classroomStudentService.delete(classroomId, studentId);
 
       return res.json(data);
     } catch (e) {

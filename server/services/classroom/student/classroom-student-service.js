@@ -19,6 +19,19 @@ class ClassroomStudentService {
     return classroomStudent;
   }
 
+  async delete(classroomId, studentId) {
+    const classroomStudent = await ClassroomStudent.findOne({
+      where: { classroomId, studentId },
+    });
+    if (!classroomStudent) {
+      throw ApiError.BadRequest(
+        `Ученика с id ${studentId} нет в классе с id ${classroomId}`
+      );
+    }
+
+    await ClassroomStudent.destroy({ where: { classroomId, studentId } });
+  }
+
   async deleteClassroom(classroomId) {
     const classroomStudent = await ClassroomStudent.findOne({
       where: { classroomId },

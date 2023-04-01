@@ -12,4 +12,8 @@ router.delete('/:id', classroomController.delete);
 
 router.get('/teacher/:teacherId', classroomController.getTeacher);
 
+router.post('/:classroomId/student', classroomController.addStudents);
+
+router.put('/:classroomId/student/:studentId', classroomController.removeStudent);
+
 module.exports = router;
