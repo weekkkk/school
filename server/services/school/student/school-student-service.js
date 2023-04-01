@@ -5,7 +5,7 @@ class SchoolStudentService {
   async create(schoolId, studentId) {
     const schoolStudentCandidate = await SchoolStudent.findOne({ studentId });
     if (schoolStudentCandidate) {
-      throw ApiError.BadRequest(`Учитель с id ${studentId} уже имеет школу`);
+      throw ApiError.BadRequest(`Ученик с id ${studentId} уже имеет школу`);
     }
 
     const schoolStudent = await SchoolStudent.create({ schoolId, studentId });
@@ -29,6 +29,12 @@ class SchoolStudentService {
     }
 
     await SchoolStudent.destroy({ where: { schoolId } });
+  }
+
+  async getAll(schoolId) {
+    const schoolStudents = await SchoolStudent.findAll({ where: { schoolId } });
+
+    return schoolStudents;
   }
 }
 

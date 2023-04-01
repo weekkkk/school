@@ -2,27 +2,24 @@ const { Student } = require('../../models');
 const ApiError = require('../../exceptions/api-error');
 
 const { userService } = require('../user');
-const { roleService } = require('../role');
-const { schoolStudentService } = require('../school');
+const { schoolStudentService, schoolService } = require('../school');
 const { classroomStudentService } = require('../classroom');
 const { answerStudentService } = require('../answer');
 
 class StudentService {
   async create(name, email, password, schoolId) {
-    const role = await roleService.getByName('STUDENT');
+    const role = 'STUDENT';
 
-    const { user, userRole } = await userService.create(
-      name,
-      email,
-      password,
-      role.id
+    const user = await userService.create(name, email, password, role);
+
+    const student = await Student.create({ userId: user.id });
+
+    const schoolStudent = await schoolStudentService.create(
+      schoolId,
+      student.id
     );
 
-    const student = Student.create({ userId: user.id });
-
-    const schoolStudent = await schoolStudentService.create(schoolId, student);
-
-    return { student, user, userRole, schoolStudent };
+    return { student, user, schoolStudent };
   }
 
   async update(id, name, password) {
@@ -32,7 +29,7 @@ class StudentService {
       throw ApiError.BadRequest(`Ученик с id ${id} не зарегистрирован`);
     }
 
-    const user = await userService.update(name, password);
+    const user = await userService.update(id, name, password);
 
     return { student, user };
   }
@@ -67,13 +64,24 @@ class StudentService {
     await userService.delete(student.userId);
   }
 
-  async getAll() {
-    const students = await Student.findAll();
+  async getSchool(schoolId) {
+    const schoolStudents = await schoolStudentService.getAll(schoolId);
 
-    return students;
+    const schoolStudentsData = [];
+
+    for (let schoolStudent of schoolStudents) {
+      const student = await this.getById(schoolStudent.studentId);
+      const school = await schoolService.getById(schoolStudent.schoolId);
+
+      schoolStudentsData.push({ schoolStudent, student, school });
+    }
+
+    return schoolStudentsData;
   }
 
   async getById(id) {
+    console.log({ id });
+
     const student = await Student.findByPk(id);
 
     if (!student) {
