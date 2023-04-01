@@ -3,12 +3,13 @@ const ApiError = require('../../exceptions/api-error');
 
 const { classroomTeacherService } = require('./teacher');
 const { classroomTestService } = require('./test');
+const { teacherService } = require('../teacher');
 
 class ClassroomService {
   async create(name, teacherId) {
     const classroom = await Classroom.create({ name });
 
-    const classroomTeacher = classroomTeacherService.create(
+    const classroomTeacher = await classroomTeacherService.create(
       classroom.id,
       teacherId
     );
@@ -40,16 +41,40 @@ class ClassroomService {
     try {
       await classroomTestService.deleteClassroom(id);
     } catch (e) {
-      classroomTestService.deleteClassroom(id);
+      console.log(e);
     }
 
     try {
       await classroomTeacherService.deleteClassroom(id);
     } catch (e) {
-      classroomTeacherService.deleteTest(id);
+      console.log(e);
     }
 
-    await Classroom.destroy(id);
+    await Classroom.destroy({ where: { id } });
+  }
+
+  async getTeacher(teacherId) {
+    const teacherClassrooms = await classroomTeacherService.getAll(teacherId);
+
+    const teacherClassroomsData = [];
+
+    for (let teacherClassroom of teacherClassrooms) {
+      const classroom = await this.getById(teacherClassroom.classroomId);
+      const teacher = await teacherService.getById(teacherClassroom.teacherId);
+      teacherClassroomsData.push({ teacherClassroom, classroom, teacher });
+    }
+
+    return teacherClassroomsData;
+  }
+
+  async getById(id) {
+    const classroom = await Classroom.findByPk(id);
+
+    if (!classroom) {
+      throw ApiError.BadRequest(`Класс с id ${id} не зарегистрирован`);
+    }
+
+    return classroom;
   }
 }
 

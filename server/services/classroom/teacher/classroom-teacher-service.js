@@ -44,6 +44,14 @@ class ClassroomTeacherService {
       where: { teacherId },
     });
   }
+
+  async getAll(teacherId) {
+    const teacherClassrooms = await TeacherClassroom.findAll({
+      where: { teacherId },
+    });
+
+    return teacherClassrooms;
+  }
 }
 
 module.exports = new ClassroomTeacherService();

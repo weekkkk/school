@@ -1,9 +1,9 @@
-const { Teacher, SchoolTeacher } = require('../../models');
+const { Teacher } = require('../../models');
 const ApiError = require('../../exceptions/api-error');
 
 const { userService } = require('../user');
 const { schoolTeacherService, schoolService } = require('../school');
-const { classroomTeacherService } = require('../classroom');
+const classroomTeacherService = require('../classroom/teacher/classroom-teacher-service');
 const { subjectTeacherService } = require('../subject');
 
 class TeacherService {
@@ -64,18 +64,6 @@ class TeacherService {
     await userService.delete(teacher.userId);
   }
 
-  async getById(id) {
-    const teacher = await Teacher.findByPk(id);
-
-    if (!teacher) {
-      throw ApiError.BadRequest(`Учитель с id ${id} не зарегистрирован`);
-    }
-
-    const user = await userService.getById(teacher.userId);
-
-    return { teacher, user };
-  }
-
   async getSchool(schoolId) {
     const schoolTeachers = await schoolTeacherService.getAll(schoolId);
 
@@ -89,6 +77,18 @@ class TeacherService {
     }
 
     return schoolTeachersData;
+  }
+
+  async getById(id) {
+    const teacher = await Teacher.findByPk(id);
+
+    if (!teacher) {
+      throw ApiError.BadRequest(`Учитель с id ${id} не зарегистрирован`);
+    }
+
+    const user = await userService.getById(teacher.userId);
+
+    return { teacher, user };
   }
 }
 
