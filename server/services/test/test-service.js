@@ -15,7 +15,7 @@ class TestService {
       throw ApiError.BadRequest(`Тест с таким name ${name} уже существует`);
     }
 
-    const fileName = uuid.v4() + '.dosx';
+    const fileName = uuid.v4() + '.docx';
     file.mv(path.resolve(__dirname, '..', '..', 'static', fileName));
 
     const test = await Test.create({ name, file: fileName });
@@ -31,13 +31,16 @@ class TestService {
       throw ApiError.BadRequest(`Тест с id ${id} не существует`);
     }
 
-    fs.unlink(`../../static/${test.file}`, (err) => {
-      if (err) {
-        console.error(err);
-        return;
+    fs.unlink(
+      path.resolve(__dirname, '..', '..', 'static', test.file),
+      (err) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        console.log('Файл успешно удален');
       }
-      console.log('Файл успешно удален');
-    });
+    );
 
     file.mv(path.resolve(__dirname, '..', '..', 'static', test.file));
 
@@ -59,18 +62,21 @@ class TestService {
     try {
       await classroomTestService.deleteTest(id);
     } catch (e) {
-      classroomTestService.deleteTest(id);
+      console.log(e);
     }
 
     await Test.destroy({ where: { id } });
 
-    fs.unlink(`../../static/${test.file}`, (err) => {
-      if (err) {
-        console.error(err);
-        return;
+    fs.unlink(
+      path.resolve(__dirname, '..', '..', 'static', test.file),
+      (err) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        console.log('Файл успешно удален');
       }
-      console.log('Файл успешно удален');
-    });
+    );
   }
 }
 

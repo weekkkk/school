@@ -7,7 +7,7 @@ const classroomTeacherService = require('../classroom/teacher/classroom-teacher-
 const { subjectTeacherService } = require('../subject');
 
 class TeacherService {
-  async create(name, email, password, schoolId) {
+  async create(name, email, password, schoolId, subjectId) {
     const role = 'TEACHER';
 
     const user = await userService.create(name, email, password, role);
@@ -19,7 +19,12 @@ class TeacherService {
       teacher.id
     );
 
-    return { teacher, user, schoolTeacher };
+    const subjectTeacher = await subjectTeacherService.create(
+      subjectId,
+      teacher.id
+    );
+
+    return { teacher, user, schoolTeacher, subjectTeacher };
   }
 
   async update(id, name, password) {

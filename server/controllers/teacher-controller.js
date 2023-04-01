@@ -5,9 +5,9 @@ class TeacherController {
   async create(req, res, next) {
     try {
       const { schoolId } = req.params;
-      const { name, email, password } = req.body;
+      const { name, email, password, subjectId } = req.body;
 
-      const data = await teacherService.create(name, email, password, schoolId);
+      const data = await teacherService.create(name, email, password, schoolId, subjectId);
 
       return res.json(data);
     } catch (e) {
