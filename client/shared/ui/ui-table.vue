@@ -4,9 +4,13 @@
             <div v-for="cell in row" class="ui-table-cell" :style="cellStyle">
                 {{ cell }}
             </div>
-            <template v-if="showButtons">
+            <template v-if="showEditButtons">
                 <div class="ui-table-cell" :style="cellStyle">{{ index ? "Удалить" : "" }}</div>
                 <div class="ui-table-cell" :style="cellStyle">{{ index ? "Изменить" : "" }}</div>
+            </template>
+            <template v-if="showPreviewButtons">
+                <div class="ui-table-cell" :style="cellStyle">{{ index ? "Скачать" : "" }}</div>
+                <div class="ui-table-cell" :style="cellStyle">{{ index ? "Посмотреть ответы" : "" }}</div>
             </template>
         </div>
     </div>
@@ -26,7 +30,9 @@ const props = defineProps({
      */
     data: { type: Array as PropType<string[][]>, default: () => [] },
     /**Показывать кнопки для редактирования и удаления элементов */
-    showButtons: { type: Boolean, default: false }
+    showEditButtons: { type: Boolean, default: false },
+    /**Показывать кнопки для предпросмотра и скачивания элементов */
+    showPreviewButtons: { type: Boolean, default: false }
 })
 
 /**Обрезанные по длине первого массива строки */
@@ -37,7 +43,9 @@ const rows = computed(() => {
 })
 /**Количество ячеек */
 const cellsCount = computed(() => {
-    let additionalCells = props.showButtons ? 2 : 0;
+    let additionalCells = 0
+    if (props.showEditButtons) additionalCells += 2;
+    if (props.showPreviewButtons) additionalCells += 2;
     return rows.value[0].length + additionalCells;
 })
 /**Стили для ячейки */
@@ -64,6 +72,7 @@ const getRowClass = (index: number) => {
     background-color: var(--color-gray);
     border: 1px solid var(--color-gray);
     color: var(--color-text);
+    width: 100%;
 
     .ui-table-row {
         display: flex;

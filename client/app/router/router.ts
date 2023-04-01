@@ -6,6 +6,9 @@ import Results from "../../pages/common/results.vue"
 import CreateTest from "../../pages/admin/create-test.vue"
 import CreateUser from "../../pages/school/create-user.vue"
 import CreateSchool from "../../pages/admin/create-school.vue"
+import CreateClass from "../../pages/teacher/create-class.vue"
+import CreateMaterial from "../../pages/teacher/create-material.vue"
+import Variants from "../../pages/teacher/variants.vue"
 
 const router = VueRouter.createRouter({
     history: VueRouter.createWebHistory(),
@@ -39,6 +42,21 @@ const router = VueRouter.createRouter({
                     name: RouterName.CREATE_SCHOOL,
                     path: `/${RouterName.CREATE_SCHOOL}`,
                     component: CreateSchool,
+                },
+                {
+                    name: RouterName.CREATE_CLASS,
+                    path: `/${RouterName.CREATE_CLASS}`,
+                    component: CreateClass,
+                },
+                {
+                    name: RouterName.CREATE_MATERIAL,
+                    path: `/${RouterName.CREATE_MATERIAL}`,
+                    component: CreateMaterial,
+                },
+                {
+                    name: RouterName.VARIANTS,
+                    path: `/${RouterName.VARIANTS}`,
+                    component: Variants,
                 },
             ]
         },

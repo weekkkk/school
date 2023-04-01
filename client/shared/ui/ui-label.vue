@@ -39,12 +39,13 @@ const componentClass = computed(() => ({
         align-items: center;
         font-weight: 500;
         font-size: 16px;
-        color: var(--color-text);
+        color: var(--color-gray-dark);
         word-break: break-word;
     }
 
     .ui-label-slot {
         min-width: 624px;
+        max-width: 624px;
     }
 }
 </style>

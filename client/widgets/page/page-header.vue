@@ -8,6 +8,9 @@
                 <ui-header-button :route="routerName.CREATE_TEST">Создать тестирование</ui-header-button>
                 <ui-header-button :route="routerName.CREATE_USER">Создать пользователя</ui-header-button>
                 <ui-header-button :route="routerName.CREATE_SCHOOL">Создать школу</ui-header-button>
+                <ui-header-button :route="routerName.CREATE_CLASS">Создать класс</ui-header-button>
+                <ui-header-button :route="routerName.CREATE_MATERIAL">Создать материал</ui-header-button>
+                <ui-header-button :route="routerName.VARIANTS">Варианты</ui-header-button>
                 <ui-header-button>Выход</ui-header-button>
             </div>
         </div>

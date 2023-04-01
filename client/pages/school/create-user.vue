@@ -14,7 +14,7 @@
                 Создать ученика
             </ui-button>
         </div>
-        <ui-table :data="data" showButtons />
+        <ui-table :data="data" showEditButtons />
     </div>
 </template>
 <script lang="ts" setup>

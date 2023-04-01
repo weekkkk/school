@@ -2,6 +2,7 @@ export default class ColorVars {
     "--color-default" = "#fff";
     "--color-light-gray" = "#eee";
     "--color-gray" = "#afafaf";
+    "--color-gray-dark" = "#777";    
     "--color-active" = "#4f7aec";
     "--color-text" = "#484848";
     "--border-radius-default" = "20px";

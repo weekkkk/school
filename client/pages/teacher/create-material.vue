@@ -1,38 +1,36 @@
 <template>
-    <div class="create-school">
+    <div class="create-material">
         <ui-label name="Название">
             <ui-input />
+        </ui-label>
+        <ui-label name="Описание">
+            <ui-textarea />
         </ui-label>
         <ui-label name="Файл" borderBottom>
             <ui-button thema="gray" class="pin-file-button">
                 Прикрепить файл
             </ui-button>
         </ui-label>
-        <div class="create-student-button-wrapper">
+        <div class="create-material-button-wrapper">
             <ui-button>
-                Создать школу
+                Создать материал
             </ui-button>
         </div>
-        <ui-table :data="data" showEditButtons />
     </div>
 </template>
 <script lang="ts" setup>
-const data =
-    [
-        ["Название"],
-        [""],
-        [""]
-    ]
+import { ref } from 'vue';
 </script>
 <style lang="less" scoped>
-.create-school {
-    .create-student-button-wrapper {
+.create-material {
+    .pin-file-button {
+        margin-left: auto;
+    }
+
+    .create-material-button-wrapper {
         display: flex;
         margin: 16px 0 24px;
         justify-content: flex-end;
-    }
-    .pin-file-button {
-        margin-left: auto;
     }
 }
 </style>
