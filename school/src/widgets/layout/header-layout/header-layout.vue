@@ -6,7 +6,7 @@
       <h1>Тестирование ЕГЭ</h1>
     </header>
 
-    <div class="p-3">
+    <div class="p-3 f jc-c">
       <main class="bg-default p-3 br-3">
         <RouterView />
       </main>
@@ -18,5 +18,9 @@
 .header-layout {
   width: 100%;
   flex-grow: 1;
+  main {
+    max-width: 1024px;
+    flex-grow: 1;
+  }
 }
 </style>
