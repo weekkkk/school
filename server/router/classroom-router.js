@@ -14,6 +14,11 @@ router.get('/teacher/:teacherId', classroomController.getTeacher);
 
 router.post('/:classroomId/student', classroomController.addStudents);
 
-router.put('/:classroomId/student/:studentId', classroomController.removeStudent);
+router.put(
+  '/:classroomId/student/:studentId',
+  classroomController.removeStudent
+);
+
+router.post('/:classroomId/test/:testId', classroomController.addTest);
 
 module.exports = router;

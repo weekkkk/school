@@ -2,6 +2,7 @@ const ApiError = require('../exceptions/api-error');
 const {
   classroomService,
   classroomStudentService,
+  classroomTestService,
 } = require('../services/classroom');
 
 class ClassroomController {
@@ -80,6 +81,18 @@ class ClassroomController {
       const { classroomId, studentId } = req.params;
 
       const data = await classroomStudentService.delete(classroomId, studentId);
+
+      return res.json(data);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async addTest(req, res, next) {
+    try {
+      const { classroomId, testId } = req.params;
+
+      const data = await classroomTestService.create(classroomId, testId);
 
       return res.json(data);
     } catch (e) {

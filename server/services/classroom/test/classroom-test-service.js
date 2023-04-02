@@ -3,20 +3,20 @@ const ApiError = require('../../../exceptions/api-error');
 const { answerClassroomTestService } = require('../../answer');
 
 class ClassroomTestService {
-  async create(classrooId, testId) {
+  async create(classroomId, testId) {
     const classroomTestCondidate = await ClassroomTest.findOne({
       where: {
-        classrooId,
+        classroomId,
         testId,
       },
     });
     if (classroomTestCondidate) {
       throw ApiError.BadRequest(
-        `Класс с id ${classrooId} уже обладает тестом ${testId}`
+        `Класс с id ${classroomId} уже обладает тестом ${testId}`
       );
     }
 
-    const classroomTest = await ClassroomTest.create({ classrooId, testId });
+    const classroomTest = await ClassroomTest.create({ classroomId, testId });
 
     return classroomTest;
   }
