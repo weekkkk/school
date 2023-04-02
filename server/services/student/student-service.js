@@ -1,0 +1,95 @@
+const { Student } = require('../../models');
+const ApiError = require('../../exceptions/api-error');
+
+const { userService } = require('../user');
+const { schoolStudentService, schoolService } = require('../school');
+const { classroomStudentService } = require('../classroom');
+const { answerStudentService } = require('../answer');
+
+class StudentService {
+  async create(name, email, password, schoolId) {
+    const role = 'STUDENT';
+
+    const user = await userService.create(name, email, password, role);
+
+    const student = await Student.create({ userId: user.id });
+
+    const schoolStudent = await schoolStudentService.create(
+      schoolId,
+      student.id
+    );
+
+    return { student, user, schoolStudent };
+  }
+
+  async update(id, name, password) {
+    const student = await Student.findByPk(id);
+
+    if (!student) {
+      throw ApiError.BadRequest(`Ученик с id ${id} не зарегистрирован`);
+    }
+
+    const user = await userService.update(id, name, password);
+
+    return { student, user };
+  }
+
+  async delete(id) {
+    const student = await Student.findByPk(id);
+
+    if (!student) {
+      throw ApiError.BadRequest(`Ученик с id ${id} не зарегистрирован`);
+    }
+
+    try {
+      await answerStudentService.deleteStudent(id);
+    } catch (e) {
+      console.log(e);
+    }
+
+    try {
+      await classroomStudentService.deleteStudent(id);
+    } catch (e) {
+      console.log(e);
+    }
+
+    try {
+      await schoolStudentService.deleteStudent(id);
+    } catch (e) {
+      console.log(e);
+    }
+
+    await Student.destroy({ where: { id } });
+
+    await userService.delete(student.userId);
+  }
+
+  async getSchool(schoolId) {
+    const schoolStudents = await schoolStudentService.getAll(schoolId);
+
+    const schoolStudentsData = [];
+
+    for (let schoolStudent of schoolStudents) {
+      const student = await this.getById(schoolStudent.studentId);
+      const school = await schoolService.getById(schoolStudent.schoolId);
+
+      schoolStudentsData.push({ schoolStudent, student, school });
+    }
+
+    return schoolStudentsData;
+  }
+
+  async getById(id) {
+    console.log({ id });
+
+    const student = await Student.findByPk(id);
+
+    if (!student) {
+      throw ApiError.BadRequest(`Ученик с id ${id} не зарегистрирован`);
+    }
+
+    return student;
+  }
+}
+
+module.exports = new StudentService();
