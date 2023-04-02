@@ -11,6 +11,8 @@ class TestController {
       const { name } = req.body;
       const { file } = req.files;
 
+      console.log({ subjectId, name, file });
+
       const data = await testService.create(name, file, subjectId);
 
       return res.json(data);

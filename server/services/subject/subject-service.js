@@ -3,14 +3,13 @@ const ApiError = require('../../exceptions/api-error');
 
 const { subjectTeacherService } = require('./teacher');
 
+const { SubjectDto } = require('../../dtos');
+
 class SubjectService {
   async create(name, teacherId) {
     const subject = await Subject.create({ name });
 
-    const subjectTeacher = subjectTeacherService.create(
-      subject.id,
-      teacherId
-    );
+    const subjectTeacher = subjectTeacherService.create(subject.id, teacherId);
 
     return { subject, subjectTeacher };
   }
@@ -39,6 +38,18 @@ class SubjectService {
     await subjectTeacherService.deleteSubject(id);
 
     await Subject.destroy(id);
+  }
+
+  async getAll() {
+    const subjects = await Subject.findAll();
+
+    const subjectsData = [];
+    for (let subject of subjects) {
+      const subjectDto = new SubjectDto(subject);
+      subjectsData.push(subjectDto);
+    }
+
+    return subjectsData;
   }
 }
 

@@ -4,11 +4,11 @@ const ApiError = require('../../../exceptions/api-error');
 class SubjectTestService {
   async create(subjectId, testId) {
     const subjectTestCondidate = await TestSubject.findOne({
-      where: { subjectId },
+      where: { testId },
     });
     if (subjectTestCondidate) {
       throw ApiError.BadRequest(
-        `Класс с id ${subjectId} уже обладает учителем`
+        `Тест с id ${testId} уже обладает предметом`
       );
     }
 

@@ -5,3 +5,5 @@ export * from './input';
 export * from './option';
 export * from './popover';
 export * from './select';
+export * from './label';
+export * from './file';

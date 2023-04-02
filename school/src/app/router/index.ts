@@ -22,11 +22,15 @@ const router = createRouter({
           name: 'login',
           component: pages.LoginPage,
         },
-
         {
           path: 'results',
           name: 'results',
           component: pages.ResultsPage,
+        },
+        {
+          path: 'test',
+          name: 'test',
+          component: pages.CreateTestPage,
         },
       ],
     },

@@ -47,7 +47,10 @@ async function logout() {
 
     <div class="p-3 f jc-c">
       <main class="container bg-default p-3 br-3">
-        <RouterView />
+        <Suspense :timeout="0">
+          <RouterView />
+          <template #fallback> Loading... </template>
+        </Suspense>
       </main>
     </div>
   </div>

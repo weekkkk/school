@@ -21,6 +21,13 @@ const props = defineProps({
     default: undefined,
   },
   /**
+   * * Заполнитель
+   */
+  placeholder: {
+    type: [String, Number, Object, Array<string | number | object>],
+    default: undefined,
+  },
+  /**
    * * Опции
    */
   options: {
@@ -100,7 +107,8 @@ function getOption(value: string | number | undefined) {
  */
 const value = computed({
   get: () => getValue<(string | number)[]>(props.modelValue),
-  set: (newValue: string | number | (string | number)[] | undefined) => {
+  set: (newValue: string | number | (string | number)[] | undefined) =>
+  {
     if (Array.isArray(newValue))
       emit(
         'update:modelValue',
@@ -129,10 +137,10 @@ function getMark(value: string | number | undefined) {
   const str = value.toString();
   const searchValue = searchVal.value;
   if (!searchValue) return str;
-  let idx = str.indexOf(searchValue);
+  let idx = str.toLowerCase().indexOf(searchValue.toLowerCase());
   while (idx != -1) {
     indices.push(idx);
-    idx = str.indexOf(searchValue, idx + 1);
+    idx = str.toLowerCase().indexOf(searchValue.toLowerCase(), idx + 1);
   }
   const arr = str.split('');
   indices.forEach((el, index) => {
@@ -147,13 +155,14 @@ function getMark(value: string | number | undefined) {
   <NPopover
     class="n-select"
     classes="n-select-popover f fd-col"
-    width="320px"
+    width="440px"
     :position="EPosition.Bottom"
   >
     <NInput
       :type="EInputType.Textarea"
       :rows="1"
       :model-value="getValue(modelValue)"
+      :placeholder="getValue(placeholder)?.toString()"
       :size="size"
       readonly
     >
@@ -171,15 +180,16 @@ function getMark(value: string | number | undefined) {
     </NInput>
 
     <template #content>
-      <section class="f fd-col p-2">
+      <section class="f fd-col px-2">
         <NInput v-model="searchVal" :size="size" placeholder="Поиск" />
       </section>
       <ul
-        class="n-select-option_list"
+        class="n-select-option_list mt-2"
         :style="{
           '--n-select-rows': rows,
           '--n-option-sz': 'var(--n-ctrl-large-sz)',
         }"
+        v-show="!!visibleOptions.length"
       >
         <NOption
           v-model="value"
@@ -190,8 +200,9 @@ function getMark(value: string | number | undefined) {
           :name="name"
           :type="multi ? EType.Checkbox : EType.Radio"
         >
-          <span v-html="getMark(getValue(option))" />
-          <slot :option="option" />
+          <slot :option="option" :getMark="getMark">
+            <span v-html="getMark(getValue(option))" />
+          </slot>
         </NOption>
       </ul>
     </template>
@@ -213,6 +224,11 @@ function getMark(value: string | number | undefined) {
 
 <style lang="scss" scoped>
 .n-select {
+  width: auto;
+  display: flex;
+  .n-input {
+    flex-grow: 1;
+  }
   &-option_list {
     display: flex;
     flex-direction: column;
