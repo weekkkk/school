@@ -2,10 +2,10 @@ const UserDto = require('./user-dto');
 /**
  * * Данные админа, отправляемые на клиент
  */
-module.exports = class SchoolDto extends UserDto {
-  constructor(user, school) {
+module.exports = class StudentDto extends UserDto {
+  constructor(user, student) {
     super(user);
 
-    this.id = school.id;
+    this.id = student.id;
   }
 };

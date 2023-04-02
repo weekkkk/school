@@ -1,10 +1,6 @@
-const ApiError = require('../exceptions/api-error');
 const authService = require('../services/auth/auth-service');
 
-const fs = require('fs');
-const path = require('path');
-
-class AnswerController {
+class AuthController {
   async login(req, res, next) {
     try {
       const { email, password } = req.body;
@@ -48,4 +44,4 @@ class AnswerController {
   }
 }
 
-module.exports = new AnswerController();
+module.exports = new AuthController();

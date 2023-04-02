@@ -1,5 +1,3 @@
-const RoleDto = require('./role-dto');
-
 /**
  * * Данные пользователя, отправляемые на клиент
  */
@@ -17,19 +15,14 @@ module.exports = class UserDto {
    */
   id;
   /**
-   * * Активирован ли пользователь
-   */
-  isActivated;
-  /**
    * * Роль пользователя
    */
   role;
 
-  constructor(user, role) {
+  constructor(user) {
     this.id = user.id;
     this.name = user.name;
     this.email = user.email;
-    this.isActivated = user.isActivated;
-    this.role = new RoleDto(role);
+    this.role = user.role;
   }
 };

@@ -53,6 +53,8 @@ router.beforeEach(async (to, from, next) => {
 
   if (!user && toName != 'main' && toName != 'login') {
     next({ name: 'login' });
+  } else if (user && toName == 'login') {
+    next({ name: 'main' });
   } else {
     next();
   }

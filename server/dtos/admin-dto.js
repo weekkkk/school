@@ -3,9 +3,12 @@ const UserDto = require('./user-dto');
  * * Данные админа, отправляемые на клиент
  */
 module.exports = class AdminDto extends UserDto {
-  constructor(school, user, role) {
-    super(user, role);
+  userId;
 
-    this.id = school.id;
+  constructor(user, admin) {
+    super(user);
+
+    this.id = admin.id;
+    this.userId = user.id;
   }
 };
