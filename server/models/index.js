@@ -18,12 +18,6 @@ const Token = sequelize.define('token', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   refreshToken: { type: DataTypes.STRING(5000), unique: true },
 });
-/**
- * * Токен пользователя
- */
-const UserToken = sequelize.define('userToken', {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-});
 
 /**
  * * Админ
@@ -155,11 +149,8 @@ const StudentAnswer = sequelize.define('studentAnswer', {
   grade: { type: DataTypes.INTEGER },
 });
 
-User.hasOne(UserToken);
-UserToken.belongsTo(User);
-
-Token.hasOne(UserToken);
-UserToken.belongsTo(Token);
+User.hasOne(Token);
+Token.belongsTo(User);
 
 User.hasOne(Admin);
 Admin.belongsTo(User);
@@ -255,5 +246,4 @@ module.exports = {
   TestSubject,
   Token,
   User,
-  UserToken,
 };
