@@ -8,6 +8,9 @@ router.post('/subject/:subjectId', testController.create);
 
 router.post('/:id', testController.update);
 
-router.delete('/:id', testController.delete);
+router.delete('/:id',testController.delete);
+
+router.get('/', testController.getAll);
+
 
 module.exports = router;

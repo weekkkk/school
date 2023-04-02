@@ -1,3 +1,5 @@
+import type { ISubject } from '../../subject';
+
 /**
  * * Тест
  */
@@ -9,9 +11,13 @@ export interface ITest {
   /**
    * * Уникальный ключ предмета
    */
-  subjectId: number;
+  subject: ISubject;
   /**
    * * Название теста
    */
   name: string;
+  /**
+   * * Файл
+   */
+  file: string;
 }

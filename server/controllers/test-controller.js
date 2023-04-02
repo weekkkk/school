@@ -11,8 +11,6 @@ class TestController {
       const { name } = req.body;
       const { file } = req.files;
 
-      console.log({ subjectId, name, file });
-
       const data = await testService.create(name, file, subjectId);
 
       return res.json(data);
@@ -39,6 +37,16 @@ class TestController {
       const { id } = req.params;
 
       const data = await testService.delete(id);
+
+      return res.json(data);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async getAll(req, res, next) {
+    try {
+      const data = await testService.getAll();
 
       return res.json(data);
     } catch (e) {

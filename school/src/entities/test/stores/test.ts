@@ -20,6 +20,21 @@ export const useTestStore = defineStore('test', () => {
     try {
       const response = await TestService.create(name, subjectId, file);
       console.log(response);
+      tests.value?.push(response.data);
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+  }
+
+  /**
+   * * Получить все
+   */
+  async function getTests() {
+    try {
+      const response = await TestService.getTests();
+      console.log(response);
+      tests.value = response.data;
     } catch (e) {
       console.log(e);
       throw e;
@@ -29,5 +44,6 @@ export const useTestStore = defineStore('test', () => {
   return {
     tests: readonly(tests),
     create,
+    getTests,
   };
 });

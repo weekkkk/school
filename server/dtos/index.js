@@ -5,10 +5,13 @@ const StudentDto = require('./student-dto');
 
 const SubjectDto = require('./subject-dto');
 
+const TestDto = require('./test-dto');
+
 module.exports = {
   AdminDto,
   SchoolDto,
   TeacherDto,
   StudentDto,
   SubjectDto,
+  TestDto,
 };

@@ -17,4 +17,11 @@ export class TestService {
       },
     });
   }
+
+  /**
+   * * Получить тесты
+   */
+  static async getTests() {
+    return $test.get<ITest[]>(`/`);
+  }
 }

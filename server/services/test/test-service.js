@@ -1,4 +1,4 @@
-const { Test } = require('../../models');
+const { Test, TestSubject, Subject } = require('../../models');
 const ApiError = require('../../exceptions/api-error');
 
 const uuid = require('uuid');
@@ -7,6 +7,7 @@ const fs = require('fs');
 
 const { subjectTestService } = require('../subject');
 const { classroomTestService } = require('../classroom');
+const { TestDto } = require('../../dtos');
 
 class TestService {
   async create(name, file, subjectId) {
@@ -22,7 +23,11 @@ class TestService {
 
     const subjectTest = await subjectTestService.create(subjectId, test.id);
 
-    return { test, subjectTest };
+    const subject = await Subject.findByPk(subjectTest.subjectId);
+
+    const testDto = new TestDto(test, subject);
+
+    return testDto;
   }
 
   async update(id, file) {
@@ -77,6 +82,23 @@ class TestService {
         console.log('Файл успешно удален');
       }
     );
+  }
+
+  async getAll() {
+    const tests = await Test.findAll();
+
+    const testsData = [];
+
+    for (let test of tests) {
+      const subjectTest = await TestSubject.findOne({
+        where: { testId: test.id },
+      });
+      const subject = await Subject.findByPk(subjectTest.subjectId);
+      const testDto = new TestDto(test, subject);
+      testsData.push(testDto);
+    }
+
+    return testsData;
   }
 }
 

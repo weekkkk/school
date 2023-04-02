@@ -1,9 +1,13 @@
 <script lang="ts" setup>
-import { CreateTestForm } from '@/widgets';
+import { CreateTestForm, AllTests } from '@/widgets';
 </script>
 
 <template>
-  <CreateTestForm />
+  <div class="f fd-col rg-3">
+    <CreateTestForm />
+
+    <AllTests />
+  </div>
 </template>
 
 <style lang="less" scoped></style>
