@@ -16,7 +16,7 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { computed, PropType } from 'vue';
+import { computed, type PropType } from 'vue';
 
 /**Параметры компонента */
 const props = defineProps({

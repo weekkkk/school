@@ -1,7 +1,7 @@
-export * as avatar from './avatar';
-export * as button from './button';
-export * as enums from './enums';
-export * as input from './input';
-export * as option from './option';
-export * as popover from './popover';
-export * as select from './select';
+export * from './avatar';
+export * from './button';
+export * from './enums';
+export * from './input';
+export * from './option';
+export * from './popover';
+export * from './select';

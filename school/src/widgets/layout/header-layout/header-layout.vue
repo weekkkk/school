@@ -7,7 +7,9 @@
     </header>
 
     <div class="p-3">
-      <main class="bg-default p-3 br-3"></main>
+      <main class="bg-default p-3 br-3">
+        <RouterView />
+      </main>
     </div>
   </div>
 </template>

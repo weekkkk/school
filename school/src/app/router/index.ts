@@ -1,12 +1,28 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { HeaderLayout } from '@/widgets';
+
+import * as widgets from '@/widgets';
+
+import * as pages from '@/pages';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      component: HeaderLayout,
+      component: widgets.HeaderLayout,
+      redirect: { name: 'main' },
+      children: [
+        {
+          path: 'main',
+          name: 'main',
+          component: pages.MainPage,
+        },
+        {
+          path: 'login',
+          name: 'login',
+          component: pages.LoginPage,
+        },
+      ],
     },
   ],
 });

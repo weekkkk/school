@@ -9,7 +9,7 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { computed, onMounted, PropType, ref } from 'vue';
+import { computed, onMounted, type PropType, ref } from 'vue';
 
 /**Параметры компонента */
 const props = defineProps({

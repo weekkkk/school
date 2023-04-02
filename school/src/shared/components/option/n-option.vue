@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PropType, computed } from 'vue';
+import { type PropType, computed } from 'vue';
 import { ESize } from '../enums';
 import { EType } from './enums';
 /**
