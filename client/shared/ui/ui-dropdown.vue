@@ -98,7 +98,7 @@ const onClick = () => isOpen.value = !isOpen.value;
             align-items: center;
 
             &:hover {
-                background-color: var(--color-light-gray);
+                background-color: var(--color-gray-light);
             }
         }
     }

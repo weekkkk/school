@@ -3,7 +3,7 @@
         <ui-label name="Название">
             <ui-input />
         </ui-label>
-        <ui-label name="Ученики">
+        <ui-label name="Ученики" borderBottom>
             <ui-dropdown :items="items" :selectedId="selectedId" @select="selectedId = $event" />
         </ui-label>
         <div class="create-class-button-wrapper">

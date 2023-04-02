@@ -12,7 +12,7 @@
 .layout {
     min-height: 100vh;
     width: 100%;
-    background-color: var(--color-light-gray);
+    background-color: var(--color-gray-light);
 
     .page-wrapper {
         margin-top: 16px;

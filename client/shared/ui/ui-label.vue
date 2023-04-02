@@ -27,11 +27,12 @@ const componentClass = computed(() => ({
     display: flex;
     justify-content: space-between;
     padding: 16px 0;
-    border-top: 1px solid var(--color-light-gray);
+    border-top: 1px solid var(--color-gray-light);
     gap: 16px;
+    width: 100%;
 
     &.border-bottom {
-        border-bottom: 1px solid var(--color-light-gray);
+        border-bottom: 1px solid var(--color-gray-light);
     }
 
     .ui-label-name {

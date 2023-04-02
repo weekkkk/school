@@ -65,7 +65,7 @@ const props = defineProps({
         display: flex;
         flex-direction: column;
         padding: 16px 0;
-        border-top: 1px solid var(--color-light-gray);
+        border-top: 1px solid var(--color-gray-light);
         gap: 16px;
 
         .answer-row {

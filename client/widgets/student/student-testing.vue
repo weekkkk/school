@@ -17,10 +17,10 @@
             </div>
             <div class="answer-row">
                 <div class="mark-text">
-                    Оценка
+                    Ответ
                 </div>
                 <div class="mark-input">
-                    <ui-input />
+                    <ui-textarea />
                 </div>
             </div>
         </div>
@@ -63,7 +63,7 @@ const props = defineProps({
         display: flex;
         flex-direction: column;
         padding: 16px 0;
-        border-top: 1px solid var(--color-light-gray);
+        border-top: 1px solid var(--color-gray-light);
         gap: 16px;
 
         .answer-row {

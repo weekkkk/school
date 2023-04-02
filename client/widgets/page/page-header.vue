@@ -12,6 +12,9 @@
                 <ui-header-button :route="routerName.CREATE_MATERIAL">Создать материал</ui-header-button>
                 <ui-header-button :route="routerName.VARIANTS">Варианты</ui-header-button>
                 <ui-header-button :route="routerName.TEST">Тестирование</ui-header-button>
+                <ui-header-button :route="routerName.ANSWERS">Ответы</ui-header-button>
+                <ui-header-button :route="routerName.STUDENT_RESULTS">Результаты</ui-header-button>
+                <ui-header-button :route="routerName.MATERIALS">Материалы</ui-header-button>
                 <ui-header-button>Выход</ui-header-button>
             </div>
         </div>

@@ -1,5 +1,5 @@
 <template>
-    <div class="ui-table">
+    <div class="ui-table" v-if="data.length">
         <div v-for="(row, index) in rows" class="ui-table-row" :class="getRowClass(index)">
             <div v-for="cell in row" class="ui-table-cell" :style="cellStyle">
                 {{ cell }}
@@ -83,7 +83,7 @@ const getRowClass = (index: number) => {
 
         &.header {
             .ui-table-cell {
-                background-color: var(--color-light-gray);
+                background-color: var(--color-gray-light);
             }
         }
 

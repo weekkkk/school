@@ -7,3 +7,6 @@ export const CREATE_CLASS = "create-class";
 export const CREATE_MATERIAL = "create-material";
 export const VARIANTS = "variants";
 export const TEST = "test";
+export const ANSWERS = "answers";
+export const STUDENT_RESULTS = "student-results";
+export const MATERIALS = "materials";
