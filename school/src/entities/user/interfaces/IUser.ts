@@ -5,7 +5,11 @@ export interface IUser {
   /**
    * * Уникальный ключ пользователя
    */
-  id: string;
+  id: number;
+  /**
+   * * Имя
+   */
+  name: string;
   /**
    * * Почта
    */

@@ -3,8 +3,9 @@ import { defineStore } from 'pinia';
 import axios from 'axios';
 
 import { API_URL, type IAuthResponse } from '../api';
-import type { IUser } from '../interfaces';
 import { AuthService } from '../services';
+import type { IAdmin } from '../../admin';
+import type { ISchool } from '../../school';
 
 /**
  * * Стор для работы с пользователем
@@ -13,7 +14,7 @@ const useUserStore = defineStore('user', () => {
   /**
    * * Пользователь
    */
-  const user = ref<IUser>();
+  const user = ref<IAdmin | ISchool>();
   /**
    * * Проверялось ли авторизован пользователь или нет
    */
