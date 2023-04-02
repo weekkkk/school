@@ -27,10 +27,16 @@ const router = createRouter({
           name: 'results',
           component: pages.ResultsPage,
         },
+
         {
-          path: 'test',
-          name: 'test',
-          component: pages.CreateTestPage,
+          path: 'tests',
+          name: 'tests',
+          component: pages.TestsPage,
+        },
+        {
+          path: 'schools',
+          name: 'schools',
+          component: pages.SchoolsPage,
         },
       ],
     },

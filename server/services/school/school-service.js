@@ -1,6 +1,8 @@
 const { School } = require('../../models');
 const ApiError = require('../../exceptions/api-error');
 
+const { SchoolDto } = require('../../dtos');
+
 const { userService } = require('../user');
 const { schoolTeacherService } = require('./teacher');
 const { schoolStudentService } = require('./student');
@@ -12,7 +14,9 @@ class SchoolService {
 
     const school = await School.create({ userId: user.id });
 
-    return { school, user };
+    const schoolDto = new SchoolDto(user, school)
+
+    return schoolDto;
   }
 
   async update(id, name, password) {
@@ -58,7 +62,9 @@ class SchoolService {
 
     for (let school of schools) {
       const user = await userService.getById(school.userId);
-      schoolsData.push({ user, school });
+
+      const schoolDto = new SchoolDto(user, school);
+      schoolsData.push(schoolDto);
     }
 
     return schoolsData;
