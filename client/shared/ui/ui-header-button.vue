@@ -42,8 +42,7 @@ const onClick = () => {
     color: var(--color-text);
 
     &:hover {
-        background-color: var(--color-gray);
-        color: var(--color-default)
+        transform: scale(1.1);
     }
 
     &.active {
