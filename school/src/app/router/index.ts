@@ -22,9 +22,38 @@ const router = createRouter({
           name: 'login',
           component: pages.LoginPage,
         },
+
+        {
+          path: 'results',
+          name: 'results',
+          component: pages.ResultsPage,
+        },
       ],
     },
   ],
 });
 
 export default router;
+
+import { useUserStore, type IUser } from '@/entities';
+
+router.beforeEach(async (to, from, next) => {
+  const { title } = to.meta;
+  const brand = '';
+  if (title) document.title = `${brand}${title as string}`;
+
+  const userStore = useUserStore();
+
+  if (!userStore.isAuthChecked) {
+    await userStore.checkAuth();
+  }
+
+  const user: IUser | undefined = userStore.user;
+  const toName = to.name?.toString() || '';
+
+  if (!user && toName != 'main' && toName != 'login') {
+    next({ name: 'login' });
+  } else {
+    next();
+  }
+});

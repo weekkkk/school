@@ -13,4 +13,11 @@ export class AuthService {
   ): Promise<AxiosResponse<IAuthResponse>> {
     return $auth.post<IAuthResponse>('/login', { email, password });
   }
+
+  /**
+   * * Выход
+   */
+  static logout(): Promise<void> {
+    return $auth.post('/logout');
+  }
 }

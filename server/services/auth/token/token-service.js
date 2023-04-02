@@ -51,12 +51,12 @@ class TokenService {
    * @param refreshToken - refresh токен
    */
   async saveToken(userId, refreshToken) {
-    const tokenData = await Token.findOne({ where: {userId} });
+    const tokenData = await Token.findOne({ where: { userId } });
     if (tokenData) {
       tokenData.refreshToken = refreshToken;
       return tokenData.save();
     }
-    const token = await TokenModel.create({ userId, refreshToken });
+    const token = await Token.create({ userId, refreshToken });
     return token;
   }
   /**
@@ -64,7 +64,7 @@ class TokenService {
    * @param refreshToken - токен, который нужно удалить
    */
   async removeToken(refreshToken) {
-    const tokenData = await TokenModel.deleteOne({ refreshToken });
+    const tokenData = await Token.destroy({ where: { refreshToken } });
     return tokenData;
   }
   /**
@@ -72,7 +72,7 @@ class TokenService {
    * @param refreshToken - токен, который нужно найти
    */
   async findToken(refreshToken) {
-    const tokenData = await TokenModel.findOne({ refreshToken });
+    const tokenData = await Token.findOne({ where: { refreshToken } });
     return tokenData;
   }
 }

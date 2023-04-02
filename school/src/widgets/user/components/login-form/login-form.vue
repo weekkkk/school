@@ -26,9 +26,14 @@ const password = ref('');
  * * Вход
  */
 async function login() {
-  await userStore.login(email.value, password.value).then(() => {
-    router.push({ name: 'default' });
-  });
+  await userStore
+    .login(email.value, password.value)
+    .then(() => {
+      router.push({ name: 'results' });
+    })
+    .catch((e) => {
+      console.log(e);
+    });
 }
 </script>
 
@@ -65,7 +70,7 @@ async function login() {
     </div>
 
     <div class="f jc-fe">
-      <NButton :color="EColor.Brand"> Войти </NButton>
+      <NButton :color="EColor.Brand" @click="login"> Войти </NButton>
     </div>
   </form>
 </template>

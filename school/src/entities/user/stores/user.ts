@@ -27,8 +27,22 @@ const useUserStore = defineStore('user', () => {
       console.log(response);
       localStorage.setItem('token', response.data.accessToken);
       user.value = response.data.user;
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  }
+  /**
+   * * Выход
+   */
+  async function logout() {
+    try {
+      await AuthService.logout();
+      localStorage.removeItem('token');
+      user.value = undefined;
     } catch (e: any) {
-      console.log(e.response?.data?.message);
+      console.log(e);
+      throw e;
     }
   }
   /**
@@ -51,6 +65,7 @@ const useUserStore = defineStore('user', () => {
   return {
     user: readonly(user),
     login,
+    logout,
     checkAuth,
     isAuthChecked: readonly(isAuthChecked),
   };
