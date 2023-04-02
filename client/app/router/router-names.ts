@@ -6,3 +6,4 @@ export const CREATE_SCHOOL = "create-school";
 export const CREATE_CLASS = "create-class";
 export const CREATE_MATERIAL = "create-material";
 export const VARIANTS = "variants";
+export const TEST = "test";

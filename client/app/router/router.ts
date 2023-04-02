@@ -9,6 +9,7 @@ import CreateSchool from "../../pages/admin/create-school.vue"
 import CreateClass from "../../pages/teacher/create-class.vue"
 import CreateMaterial from "../../pages/teacher/create-material.vue"
 import Variants from "../../pages/teacher/variants.vue"
+import Test from "../../pages/student/test.vue"
 
 const router = VueRouter.createRouter({
     history: VueRouter.createWebHistory(),
@@ -57,6 +58,11 @@ const router = VueRouter.createRouter({
                     name: RouterName.VARIANTS,
                     path: `/${RouterName.VARIANTS}`,
                     component: Variants,
+                },
+                {
+                    name: RouterName.TEST,
+                    path: `/${RouterName.TEST}`,
+                    component: Test,
                 },
             ]
         },
