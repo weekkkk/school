@@ -1,1 +1,1 @@
-export * from './subject-select';
+export * from './classroom-table';

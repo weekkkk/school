@@ -2,6 +2,7 @@ import { readonly, ref } from 'vue';
 import { defineStore } from 'pinia';
 
 import type { IStudent } from '../interfaces';
+import type { ITeacher } from '../../teacher/interfaces';
 import { StudentService } from '../services';
 import { useUserStore } from '@/entities/user';
 
@@ -45,9 +46,12 @@ export const useStudentStore = defineStore('student', () => {
   async function getSchoolStudents() {
     try {
       const userStore = useUserStore();
-      if (!userStore.user || userStore.user.role != 'SCHOOL') return;
+      const role = userStore.user.role;
+      if (!userStore.user || (role != 'SCHOOL' && role != 'TEACHER')) return;
       const response = await StudentService.getSchoolStudents(
-        userStore.user.id
+        role == 'SCHOOL'
+          ? userStore.user.id
+          : (userStore.user as ITeacher).schoolId
       );
       console.log(response);
       students.value = response.data;

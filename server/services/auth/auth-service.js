@@ -6,6 +6,7 @@ const {
   Student,
   TeacherSubject,
   Subject,
+  SchoolTeacher,
 } = require('../../models');
 const ApiError = require('../../exceptions/api-error');
 
@@ -42,7 +43,12 @@ class UserService {
           where: { teacherId: teacher.id },
         });
         const subject = await Subject.findByPk(teacherSubject.subjectId);
-        userDto = new TeacherDto(user, teacher, subject);
+        const teacherSchool = await SchoolTeacher.findOne({
+          where: { teacherId: teacher.id },
+        });
+        userDto = new TeacherDto(user, teacher, subject, {
+          id: teacherSchool.schoolId,
+        });
         break;
       case 'STUDENT':
         const student = await Student.findOne({ where: { userId: user.id } });
@@ -102,7 +108,12 @@ class UserService {
           where: { teacherId: teacher.id },
         });
         const subject = await Subject.findByPk(teacherSubject.subjectId);
-        userDto = new TeacherDto(user, teacher, subject);
+        const teacherSchool = await SchoolTeacher.findOne({
+          where: { teacherId: teacher.id },
+        });
+        userDto = new TeacherDto(user, teacher, subject, {
+          id: teacherSchool.schoolId,
+        });
         break;
       case 'STUDENT':
         const student = await Student.findOne({ where: { userId: user.id } });

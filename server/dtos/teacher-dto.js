@@ -9,15 +9,20 @@ module.exports = class TeacherDto extends UserDto {
    */
   userId;
   /**
-   * * Уникальный ключ предмета
+   * * Уникальный ключ школы
+   */
+  schoolId;
+  /**
+   * * Предмет
    */
   subject;
 
-  constructor(user, teacher, subject) {
+  constructor(user, teacher, subject, school) {
     super(user);
 
     this.id = teacher.id;
     this.userId = user.id;
     this.subject = new SubjectDto(subject);
+    this.schoolId = school.id
   }
 };

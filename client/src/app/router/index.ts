@@ -48,6 +48,11 @@ const router = createRouter({
           name: 'teachers',
           component: pages.TeachersPage,
         },
+        {
+          path: 'classrooms',
+          name: 'classrooms',
+          component: pages.ClassroomsPage,
+        },
       ],
     },
   ],

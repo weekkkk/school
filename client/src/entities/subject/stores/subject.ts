@@ -27,8 +27,16 @@ export const useSubjectStore = defineStore('subject', () => {
     }
   }
 
+  /**
+   * * Найти предмет по id
+   */
+  function findById(id: number) {
+    return subjects.value.find((subject) => subject.id == id);
+  }
+
   return {
     subjects: readonly(subjects),
     getSubjects,
+    findById,
   };
 });

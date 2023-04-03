@@ -9,6 +9,10 @@ export interface ITeacher extends IUser {
    */
   userId: number;
   /**
+   * * Уникальный ключ школы
+   */
+  schoolId: number;
+  /**
    * * Уникальный ключ предмета
    */
   subject: ISubject;

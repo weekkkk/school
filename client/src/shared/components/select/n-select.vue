@@ -161,7 +161,7 @@ function getMark(value: string | number | undefined) {
     <NInput
       :type="EInputType.Textarea"
       :rows="1"
-      :model-value="getValue(modelValue)"
+      :model-value="!multi ? getValue(modelValue) : ''"
       :placeholder="getValue(placeholder)?.toString()"
       :size="size"
       readonly

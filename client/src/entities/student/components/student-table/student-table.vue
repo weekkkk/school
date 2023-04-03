@@ -4,7 +4,7 @@ import type { IStudent } from '../../interfaces';
 
 const props = defineProps({
   /**
-   * * Школы
+   * * Ученики
    */
   students: { type: Array as PropType<IStudent[]>, default: [] },
 });

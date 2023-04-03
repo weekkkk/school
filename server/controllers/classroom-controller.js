@@ -13,6 +13,8 @@ class ClassroomController {
 
       const data = await classroomService.create(name, teacherId);
 
+      console.log({ data });
+
       return res.json(data);
     } catch (e) {
       next(e);

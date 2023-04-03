@@ -4,9 +4,11 @@ const ApiError = require('../../exceptions/api-error');
 const { classroomTeacherService } = require('./teacher');
 const { classroomTestService } = require('./test');
 const { teacherService } = require('../teacher');
+const { ClassroomDto } = require('../../dtos');
 
 class ClassroomService {
   async create(name, teacherId) {
+    console.log({ name, teacherId });
     const classroom = await Classroom.create({ name });
 
     const classroomTeacher = await classroomTeacherService.create(
@@ -14,7 +16,11 @@ class ClassroomService {
       teacherId
     );
 
-    return { classroom, classroomTeacher };
+    console.log(classroom);
+
+    const classroomDto = new ClassroomDto(classroom);
+
+    return classroomDto;
   }
 
   async update(id, name) {
@@ -61,7 +67,8 @@ class ClassroomService {
     for (let teacherClassroom of teacherClassrooms) {
       const classroom = await this.getById(teacherClassroom.classroomId);
       const teacher = await teacherService.getById(teacherClassroom.teacherId);
-      teacherClassroomsData.push({ teacherClassroom, classroom, teacher });
+      const classroomDto = new ClassroomDto(classroom);
+      teacherClassroomsData.push(classroomDto);
     }
 
     return teacherClassroomsData;
