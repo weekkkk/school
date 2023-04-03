@@ -1,5 +1,5 @@
 import { $test } from '../api';
-import type { IStudent } from '../interfaces';
+import type { IStudent, IStudentTest } from '../interfaces';
 /**
  * * Сервис авторизации
  */
@@ -25,5 +25,12 @@ export class StudentService {
    */
   static async getSchoolStudents(schoolId: number) {
     return $test.get<IStudent[]>(`/school/${schoolId}`);
+  }
+
+  /**
+   * * Получить тесты
+   */
+  static async getTests(studentId: number) {
+    return $test.get<IStudentTest[]>(`/${studentId}/test`);
   }
 }

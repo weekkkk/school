@@ -51,6 +51,18 @@ class StudentController {
       next(e);
     }
   }
+
+  async getTests(req, res, next) {
+    try {
+      const { studentId } = req.params;
+
+      const data = await studentService.getTests(studentId);
+
+      return res.json(data);
+    } catch (e) {
+      next(e);
+    }
+  }
 }
 
 module.exports = new StudentController();

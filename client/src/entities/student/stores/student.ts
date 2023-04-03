@@ -1,7 +1,7 @@
 import { readonly, ref } from 'vue';
 import { defineStore } from 'pinia';
 
-import type { IStudent } from '../interfaces';
+import type { IStudent, IStudentTest } from '../interfaces';
 import type { ITeacher } from '../../teacher/interfaces';
 import { StudentService } from '../services';
 import { useUserStore } from '@/entities/user';
@@ -11,9 +11,14 @@ import { useUserStore } from '@/entities/user';
  */
 export const useStudentStore = defineStore('student', () => {
   /**
-   * * Предметы
+   * * Ученики
    */
   const students = ref<IStudent[]>();
+
+  /**
+   * * Тесты доступные ученику
+   */
+  const studentTests = ref<IStudentTest[]>();
 
   /**
    * * Создать
@@ -46,7 +51,8 @@ export const useStudentStore = defineStore('student', () => {
   async function getSchoolStudents() {
     try {
       const userStore = useUserStore();
-      const role = userStore.user.role;
+      const role = userStore.user?.role;
+      if (!role) return;
       if (!userStore.user || (role != 'SCHOOL' && role != 'TEACHER')) return;
       const response = await StudentService.getSchoolStudents(
         role == 'SCHOOL'
@@ -61,9 +67,28 @@ export const useStudentStore = defineStore('student', () => {
     }
   }
 
+  /**
+   * * Получить тесты для ученика
+   */
+  async function getTests() {
+    try {
+      const userStore = useUserStore();
+      const role = userStore.user?.role;
+      if (!role) return;
+      if (!userStore.user || role != 'STUDENT') return;
+      const response = await StudentService.getTests(userStore.user.id);
+      console.log(response);
+      studentTests.value = response.data;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   return {
     students: readonly(students),
     createSchoolStudent,
     getSchoolStudents,
+    studentTests: readonly(studentTests),
+    getTests,
   };
 });

@@ -53,6 +53,11 @@ const router = createRouter({
           name: 'classrooms',
           component: pages.ClassroomsPage,
         },
+        {
+          path: 'student-tests',
+          name: 'student-tests',
+          component: pages.StudentTestsPage,
+        },
       ],
     },
   ],

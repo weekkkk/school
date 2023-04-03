@@ -1,11 +1,19 @@
-const { Student } = require('../../models');
+const {
+  Student,
+  Classroom,
+  ClassroomStudent,
+  ClassroomTest,
+  Test,
+  Subject,
+  TestSubject,
+} = require('../../models');
 const ApiError = require('../../exceptions/api-error');
 
 const { userService } = require('../user');
 const { schoolStudentService, schoolService } = require('../school');
 const { classroomStudentService } = require('../classroom');
 const { answerStudentService } = require('../answer');
-const { StudentDto } = require('../../dtos');
+const { StudentDto, TestDto, ClassroomDto } = require('../../dtos');
 
 class StudentService {
   async create(name, email, password, schoolId) {
@@ -95,6 +103,39 @@ class StudentService {
     }
 
     return student;
+  }
+
+  async getTests(studentId) {
+    const studentClassrooms = await ClassroomStudent.findAll({
+      where: { studentId },
+    });
+
+    const studentTestsData = [];
+    for (let studentClassroom of studentClassrooms) {
+      const classroom = await Classroom.findByPk(
+        studentClassroom.findByPk(studentClassroom.classroomId)
+      );
+      const classroomTests = await ClassroomTest.findAll({
+        where: { classroomId: classroom.id },
+      });
+      for (let classroomTest of classroomTests) {
+        const test = await Test.findByPk(classroomTest.testId);
+        const testSubject = await TestSubject.findOne({
+          where: { testId: test.id },
+        });
+        const subject = await Subject.findByPk(testSubject.subjectId);
+
+        const testDto = new TestDto(test, subject);
+        const classroomDto = new ClassroomDto(classroom);
+        studentTestsData.push({
+          id: Number(`${test.id}${classroom.id}`),
+          test: testDto,
+          classroom: classroomDto,
+        });
+      }
+    }
+
+    return studentTestsData;
   }
 }
 
