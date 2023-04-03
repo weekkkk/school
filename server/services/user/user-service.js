@@ -43,13 +43,13 @@ class UserService {
   }
 
   async getById(id) {
-    const school = await User.findByPk(id);
+    const user = await User.findByPk(id);
 
-    if (!school) {
+    if (!user) {
       throw ApiError.BadRequest(`Пользователь с id ${id} не зарегистрирована`);
     }
 
-    return school;
+    return user;
   }
 }
 

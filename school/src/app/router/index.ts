@@ -38,6 +38,11 @@ const router = createRouter({
           name: 'schools',
           component: pages.SchoolsPage,
         },
+        {
+          path: 'students',
+          name: 'students',
+          component: pages.StudentsPage,
+        },
       ],
     },
   ],
@@ -64,6 +69,13 @@ router.beforeEach(async (to, from, next) => {
   if (!user && toName != 'main' && toName != 'login') {
     next({ name: 'login' });
   } else if (user && toName == 'login') {
+    next({ name: 'main' });
+  } else if (user?.role != 'ADMIN' && toName == 'schools') {
+    next({ name: 'main' });
+  } else if (
+    user?.role != 'SCHOOL' &&
+    (toName == 'students' || toName == 'teachers')
+  ) {
     next({ name: 'main' });
   } else {
     next();

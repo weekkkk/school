@@ -3,7 +3,9 @@ const ApiError = require('../../../exceptions/api-error');
 
 class SchoolStudentService {
   async create(schoolId, studentId) {
-    const schoolStudentCandidate = await SchoolStudent.findOne({ studentId });
+    const schoolStudentCandidate = await SchoolStudent.findOne({
+      where: { studentId },
+    });
     if (schoolStudentCandidate) {
       throw ApiError.BadRequest(`Ученик с id ${studentId} уже имеет школу`);
     }
@@ -21,7 +23,7 @@ class SchoolStudentService {
 
     await SchoolStudent.destroy({ where: { studentId } });
   }
-  
+
   async deleteSchool(schoolId) {
     const schoolStudent = await SchoolStudent.findOne({ schoolId });
     if (!schoolStudent) {

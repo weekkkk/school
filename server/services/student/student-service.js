@@ -5,6 +5,7 @@ const { userService } = require('../user');
 const { schoolStudentService, schoolService } = require('../school');
 const { classroomStudentService } = require('../classroom');
 const { answerStudentService } = require('../answer');
+const { StudentDto } = require('../../dtos');
 
 class StudentService {
   async create(name, email, password, schoolId) {
@@ -19,7 +20,9 @@ class StudentService {
       student.id
     );
 
-    return { student, user, schoolStudent };
+    const studentDto = new StudentDto(user, student);
+
+    return studentDto;
   }
 
   async update(id, name, password) {
@@ -72,8 +75,11 @@ class StudentService {
     for (let schoolStudent of schoolStudents) {
       const student = await this.getById(schoolStudent.studentId);
       const school = await schoolService.getById(schoolStudent.schoolId);
+      const user = await userService.getById(student.userId);
 
-      schoolStudentsData.push({ schoolStudent, student, school });
+      const studentDto = new StudentDto(user, student);
+
+      schoolStudentsData.push(studentDto);
     }
 
     return schoolStudentsData;
