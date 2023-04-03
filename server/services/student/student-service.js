@@ -112,9 +112,7 @@ class StudentService {
 
     const studentTestsData = [];
     for (let studentClassroom of studentClassrooms) {
-      const classroom = await Classroom.findByPk(
-        studentClassroom.findByPk(studentClassroom.classroomId)
-      );
+      const classroom = await Classroom.findByPk(studentClassroom.classroomId);
       const classroomTests = await ClassroomTest.findAll({
         where: { classroomId: classroom.id },
       });

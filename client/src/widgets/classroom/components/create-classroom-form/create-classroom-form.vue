@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { EColor, EInputType, NButton, NInput, NLabel } from '@/shared';
 
-import { StudentSelect, useClassroomStore } from '@/entities';
+import { StudentSelect, TestSelect, useClassroomStore } from '@/entities';
 
 /**
  * * Стор для работы с тестами
@@ -20,11 +20,16 @@ const name = ref('');
 const studentIds = ref<number[]>();
 
 /**
+ * * Тесты
+ */
+const testIds = ref<number[]>();
+
+/**
  * * Создать тест
  */
 async function createClassroom() {
-  if (!name.value || !studentIds.value?.length) return;
-  await classroomStore.create(name.value, studentIds.value).then(() => {
+  if (!name.value || !studentIds.value?.length || !testIds.value?.length) return;
+  await classroomStore.create(name.value, studentIds.value, testIds.value).then(() => {
     name.value = '';
   });
 }
@@ -46,6 +51,14 @@ async function createClassroom() {
           v-model="studentIds"
           id="classroom-students"
           placeholder="Выберите учеников"
+        />
+      </NLabel>
+
+      <NLabel label="Тесты" id="classroom-tests">
+        <TestSelect
+          v-model="testIds"
+          id="classroom-tests"
+          placeholder="Выберите тесты"
         />
       </NLabel>
     </div>

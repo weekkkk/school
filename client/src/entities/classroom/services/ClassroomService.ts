@@ -1,3 +1,4 @@
+import type { ITest } from '../../test';
 import { $classroom } from '../api';
 import type { IClassroom } from '../interfaces';
 /**
@@ -15,6 +16,12 @@ export class ClassroomService {
    */
   static async addStudents(id: number, studentIds: number[]) {
     $classroom.post(`/${id}/student`, { studentIds });
+  }
+  /**
+   * * Добавить тест в класс
+   */
+  static async addTest(id: number, testId: number) {
+    $classroom.post<ITest>(`/${id}/test/${testId}`);
   }
   /**
    * * Получить классы

@@ -10,9 +10,14 @@ module.exports = class ClassroomDto {
    * * Название
    */
   name;
+  /**
+   * * Тесты 
+   */
+  testIds
 
-  constructor(classroom) {
+  constructor(classroom, tests = []) {
     this.id = classroom.id;
     this.name = classroom.name;
+    this.testIds = tests.map(test => test.id)
   }
 };

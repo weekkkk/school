@@ -41,9 +41,17 @@ export const useTestStore = defineStore('test', () => {
     }
   }
 
+  /**
+   * * Найти по id
+   */
+  function findById(id: number) {
+    return tests.value?.find((test) => test.id == id);
+  }
+
   return {
     tests: readonly(tests),
     create,
     getTests,
+    findById,
   };
 });

@@ -13,18 +13,24 @@ export const useClassroomStore = defineStore('classroom', () => {
    * * Классы
    */
   const classrooms = ref<IClassroom[]>();
-
   /**
    * * Создать
    */
-  async function create(name: string, studentIds: number[]) {
+  async function create(name: string, studentIds: number[], testIds: number[]) {
     try {
       const userStore = useUserStore();
       if (!userStore.user || userStore.user.role != 'TEACHER') return;
       const response = await ClassroomService.create(name, userStore.user.id);
       await ClassroomService.addStudents(response.data.id, studentIds);
-      console.log(response);
-      classrooms.value.push(response.data);
+      for (let testId of testIds) {
+        await ClassroomService.addTest(response.data.id, testId);
+      }
+      const newClassroom: IClassroom = {
+        id: response.data.id,
+        name,
+        testIds,
+      };
+      classrooms.value?.push(newClassroom);
     } catch (e) {
       console.log(e);
     }

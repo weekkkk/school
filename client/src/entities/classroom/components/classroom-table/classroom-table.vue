@@ -1,15 +1,15 @@
 <script lang="ts" async setup>
 import type { PropType } from 'vue';
 import type { IClassroom } from '../../interfaces';
-import { useSubjectStore } from '../../../subject';
+import { useTestStore } from '../../../test';
 
 /**
- * * Стор предметов
+ * * Стор тестов
  */
-const subjectStore = useSubjectStore();
+const testStore = useTestStore();
 
-if (!subjectStore.subjects) {
-  await subjectStore.getSubjects();
+if (!testStore.tests) {
+  await testStore.getTests();
 }
 
 const props = defineProps({
@@ -24,9 +24,16 @@ const props = defineProps({
   <table>
     <tr>
       <th>Название</th>
+      <th>Тесты</th>
     </tr>
     <tr v-for="classroom in classrooms" :key="classroom.id">
       <td>{{ classroom.name }}</td>
+      <td>
+        <span v-for="(testId, index) in classroom.testIds" :key="testId">
+          {{ testStore.findById(testId)?.name
+          }}<span v-if="index != classroom.testIds.length - 1">,</span>
+        </span>
+      </td>
     </tr>
   </table>
 </template>

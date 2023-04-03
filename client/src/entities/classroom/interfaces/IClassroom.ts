@@ -1,3 +1,5 @@
+import type { ITest } from '../../test';
+
 /**
  * * Прдемет
  */
@@ -10,4 +12,8 @@ export interface IClassroom {
    * * Название
    */
   name: string;
+  /**
+   * * тесты
+   */
+  testIds: number[];
 }

@@ -1,4 +1,4 @@
-const { Classroom } = require('../../models');
+const { Classroom, ClassroomTest } = require('../../models');
 const ApiError = require('../../exceptions/api-error');
 
 const { classroomTeacherService } = require('./teacher');
@@ -66,8 +66,14 @@ class ClassroomService {
 
     for (let teacherClassroom of teacherClassrooms) {
       const classroom = await this.getById(teacherClassroom.classroomId);
+      const classroomTests = await ClassroomTest.findAll({
+        where: { classroomId: classroom.id },
+      });
       const teacher = await teacherService.getById(teacherClassroom.teacherId);
-      const classroomDto = new ClassroomDto(classroom);
+      const classroomDto = new ClassroomDto(
+        classroom,
+        classroomTests.map((el) => ({ id: el.testId }))
+      );
       teacherClassroomsData.push(classroomDto);
     }
 
