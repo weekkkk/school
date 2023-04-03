@@ -1,4 +1,12 @@
-const { User, Admin, School, Teacher, Student } = require('../../models');
+const {
+  User,
+  Admin,
+  School,
+  Teacher,
+  Student,
+  TeacherSubject,
+  Subject,
+} = require('../../models');
 const ApiError = require('../../exceptions/api-error');
 
 const tokenService = require('./token/token-service');
@@ -30,7 +38,11 @@ class UserService {
         break;
       case 'TEACHER':
         const teacher = await Teacher.findOne({ where: { userId: user.id } });
-        userDto = new TeacherDto(user, teacher);
+        const teacherSubject = await TeacherSubject.findOne({
+          where: { teacherId: teacher.id },
+        });
+        const subject = await Subject.findByPk(teacherSubject.subjectId);
+        userDto = new TeacherDto(user, teacher, subject);
         break;
       case 'STUDENT':
         const student = await Student.findOne({ where: { userId: user.id } });
@@ -86,7 +98,11 @@ class UserService {
         break;
       case 'TEACHER':
         const teacher = await Teacher.findOne({ where: { userId: user.id } });
-        userDto = new TeacherDto(user, teacher);
+        const teacherSubject = await TeacherSubject.findOne({
+          where: { teacherId: teacher.id },
+        });
+        const subject = await Subject.findByPk(teacherSubject.subjectId);
+        userDto = new TeacherDto(user, teacher, subject);
         break;
       case 'STUDENT':
         const student = await Student.findOne({ where: { userId: user.id } });

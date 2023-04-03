@@ -1,5 +1,7 @@
+import type { IStudent } from '@/entities/student';
 import type { IAdmin } from '../../../admin';
 import type { ISchool } from '../../../school';
+import type { ITeacher } from '@/entities/teacher';
 /**
  * * Ответа запроса на авторизацию
  */
@@ -15,5 +17,5 @@ export interface IAuthResponse {
   /**
    * * Пользователь
    */
-  user: IAdmin | ISchool;
+  user: IAdmin | ISchool | ITeacher | IStudent;
 }
