@@ -1,10 +1,11 @@
-const { Teacher } = require('../../models');
+const { Teacher, Subject, User, TeacherSubject } = require('../../models');
 const ApiError = require('../../exceptions/api-error');
 
 const { userService } = require('../user');
 const { schoolTeacherService, schoolService } = require('../school');
 const classroomTeacherService = require('../classroom/teacher/classroom-teacher-service');
-const { subjectTeacherService } = require('../subject');
+const { subjectTeacherService, subjectService } = require('../subject');
+const { TeacherDto } = require('../../dtos');
 
 class TeacherService {
   async create(name, email, password, schoolId, subjectId) {
@@ -24,7 +25,11 @@ class TeacherService {
       teacher.id
     );
 
-    return { teacher, user, schoolTeacher, subjectTeacher };
+    const subject = await Subject.findByPk(subjectId);
+
+    const teacherDto = new TeacherDto(user, teacher, subject);
+
+    return teacherDto;
   }
 
   async update(id, name, password) {
@@ -75,10 +80,15 @@ class TeacherService {
     const schoolTeachersData = [];
 
     for (let schoolTeacher of schoolTeachers) {
-      const teacher = await this.getById(schoolTeacher.teacherId);
+      const { teacher, user } = await this.getById(schoolTeacher.teacherId);
       const school = await schoolService.getById(schoolTeacher.schoolId);
+      const teacherSubject = await TeacherSubject.findOne({
+        where: { teacherId: teacher.id },
+      });
+      const subject = await Subject.findByPk(teacherSubject.subjectId);
 
-      schoolTeachersData.push({ schoolTeacher, teacher, school });
+      const teacherDto = new TeacherDto(user, teacher, subject);
+      schoolTeachersData.push(teacherDto);
     }
 
     return schoolTeachersData;

@@ -42,7 +42,7 @@ async function createStudent() {
         <NInput
           v-model="name"
           id="student-name"
-          placeholder="Введите имя варианта"
+          placeholder="Введите имя ученика"
         />
       </NLabel>
       <NLabel label="Email" id="student-email">
