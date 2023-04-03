@@ -16,11 +16,15 @@ const props = defineProps({
       <th>Название</th>
       <th>Email</th>
       <th>Предмет</th>
+      <th></th>
     </tr>
     <tr v-for="studentTest in studentTests" :key="studentTest.id">
       <td>{{ studentTest.classroom.name }}</td>
       <td>{{ studentTest.test.name }}</td>
       <td>{{ studentTest.test.subject.name }}</td>
+      <td>
+        <RouterLink :to="{ name: 'test' }">Пройти</RouterLink>
+      </td>
     </tr>
   </table>
 </template>

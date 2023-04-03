@@ -58,6 +58,11 @@ const router = createRouter({
           name: 'student-tests',
           component: pages.StudentTestsPage,
         },
+        {
+          path: 'test',
+          name: 'test',
+          component: pages.StudentTestsPage,
+        },
       ],
     },
   ],
