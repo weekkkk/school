@@ -5,3 +5,4 @@ export * from './school';
 export * from './student';
 export * from './teacher';
 export * from './classroom';
+export * from './answer';

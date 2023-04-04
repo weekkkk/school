@@ -59,9 +59,9 @@ const router = createRouter({
           component: pages.StudentTestsPage,
         },
         {
-          path: 'test',
+          path: 'test/:id',
           name: 'test',
-          component: pages.StudentTestsPage,
+          component: pages.TestPage,
         },
       ],
     },

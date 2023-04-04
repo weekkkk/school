@@ -7,3 +7,4 @@ export * from './students-page';
 export * from './teachers-page';
 export * from './classrooms-page';
 export * from './student-tests-page';
+export * from './test-page';

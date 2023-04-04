@@ -126,7 +126,7 @@ class StudentService {
         const testDto = new TestDto(test, subject);
         const classroomDto = new ClassroomDto(classroom);
         studentTestsData.push({
-          id: Number(`${test.id}${classroom.id}`),
+          id: classroomTest.id,
           test: testDto,
           classroom: classroomDto,
         });

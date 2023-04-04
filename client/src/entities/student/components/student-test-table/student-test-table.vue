@@ -23,7 +23,9 @@ const props = defineProps({
       <td>{{ studentTest.test.name }}</td>
       <td>{{ studentTest.test.subject.name }}</td>
       <td>
-        <RouterLink :to="{ name: 'test' }">Пройти</RouterLink>
+        <RouterLink :to="{ name: 'test', params: { id: studentTest.id } }"
+          >Пройти</RouterLink
+        >
       </td>
     </tr>
   </table>
