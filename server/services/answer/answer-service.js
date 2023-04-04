@@ -10,7 +10,7 @@ const { answerClassroomTestService } = require('./classroom-test');
 
 class AnswerService {
   async create(file, studentId, classroomTestId) {
-    const fileName = uuid.v4() + '.dosx';
+    const fileName = uuid.v4() + '.docx';
     file.mv(path.resolve(__dirname, '..', '..', 'static', fileName));
 
     const answer = await Answer.create({ file: fileName });

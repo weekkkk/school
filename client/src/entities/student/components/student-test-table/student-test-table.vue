@@ -14,7 +14,7 @@ const props = defineProps({
   <table>
     <tr>
       <th>Название</th>
-      <th>Email</th>
+      <th>Вариант</th>
       <th>Предмет</th>
       <th></th>
     </tr>
@@ -23,9 +23,9 @@ const props = defineProps({
       <td>{{ studentTest.test.name }}</td>
       <td>{{ studentTest.test.subject.name }}</td>
       <td>
-        <RouterLink :to="{ name: 'test', params: { id: studentTest.id } }"
-          >Пройти</RouterLink
-        >
+        <RouterLink :to="{ name: 'test', params: { id: studentTest.id } }">
+          Пройти
+        </RouterLink>
       </td>
     </tr>
   </table>

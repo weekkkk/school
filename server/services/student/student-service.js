@@ -6,6 +6,8 @@ const {
   Test,
   Subject,
   TestSubject,
+  StudentAnswer,
+  ClassroomTestAnswer,
 } = require('../../models');
 const ApiError = require('../../exceptions/api-error');
 
@@ -117,6 +119,12 @@ class StudentService {
         where: { classroomId: classroom.id },
       });
       for (let classroomTest of classroomTests) {
+        const classroomTestAnswer = await ClassroomTestAnswer.findOne({
+          where: {
+            classroomTestId: classroomTest.id,
+          },
+        });
+        if (classroomTestAnswer) continue;
         const test = await Test.findByPk(classroomTest.testId);
         const testSubject = await TestSubject.findOne({
           where: { testId: test.id },
