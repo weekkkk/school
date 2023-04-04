@@ -1,5 +1,6 @@
 <template>
     <div class="results">
+        <ui-docx-preview />
         <ui-label name="Школа">
             <ui-dropdown :items="items" :selectedId="selectedId" @select="selectedId = $event" />
         </ui-label>
