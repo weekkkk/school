@@ -8,3 +8,5 @@ export * from './teachers-page';
 export * from './classrooms-page';
 export * from './student-tests-page';
 export * from './test-page';
+export * from './answers-page';
+export * from './answer-page';

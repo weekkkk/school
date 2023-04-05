@@ -1,4 +1,4 @@
-import type { ISubject } from '../../subject';
+import type { IStudent } from '../../student';
 
 /**
  * * Тест
@@ -9,15 +9,11 @@ export interface IAnswer {
    */
   id: number;
   /**
+   * * Оценка
+   */
+  grade: number;
+  /**
    * * Уникальный ключ предмета
    */
-  subject: ISubject;
-  /**
-   * * Название теста
-   */
-  name: string;
-  /**
-   * * Файл
-   */
-  file: string;
+  student: IStudent;
 }

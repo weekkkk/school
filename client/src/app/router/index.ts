@@ -63,6 +63,16 @@ const router = createRouter({
           name: 'test',
           component: pages.TestPage,
         },
+        {
+          path: 'answers',
+          name: 'answers',
+          component: pages.AnswersPage,
+        },
+        {
+          path: 'answer/:id',
+          name: 'answer',
+          component: pages.AnswerPage,
+        },
       ],
     },
   ],

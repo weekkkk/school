@@ -5,7 +5,7 @@ import type { IAnswer } from '../interfaces';
  */
 export class AnswerService {
   /**
-   * * Создать тест
+   * * Создать ответ
    */
   static async create(classroomTestId: number, studentId: number, file: File) {
     const formData = new FormData();
@@ -19,5 +19,26 @@ export class AnswerService {
         },
       }
     );
+  }
+
+  /**
+   * * Поставить оценку
+   */
+  static async setGrade(id: number, grade: number) {
+    return $answer.post(`/${id}`, { grade });
+  }
+
+  /**
+   * * Получить ответ
+   */
+  static async getAnswer(anwerId: number) {
+    return $answer.get<IAnswer>(`/${anwerId}`);
+  }
+
+  /**
+   * * Получить ответы
+   */
+  static async getAnswers(teacherId: number) {
+    return $answer.get<IAnswer[]>(`/teacher/${teacherId}`);
   }
 }

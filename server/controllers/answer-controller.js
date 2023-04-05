@@ -30,6 +30,30 @@ class AnswerController {
       next(e);
     }
   }
+
+  async getAnswer(req, res, next) {
+    try {
+      const { id } = req.params;
+
+      const data = await answerService.getAnswer(id);
+
+      return res.json(data);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async getAnswers(req, res, next) {
+    try {
+      const { teacherId } = req.params;
+
+      const data = await answerService.getAnswers(teacherId);
+
+      return res.json(data);
+    } catch (e) {
+      next(e);
+    }
+  }
 }
 
 module.exports = new AnswerController();

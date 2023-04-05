@@ -10,9 +10,13 @@ import { useUserStore } from '../../user';
  */
 export const useAnswerStore = defineStore('answer', () => {
   /**
-   * * Предметы
+   * * Ответы
    */
   const answers = ref<IAnswer[]>();
+  /**
+   * * Ответ
+   */
+  const answer = ref<IAnswer>();
 
   /**
    * * Создать
@@ -36,8 +40,55 @@ export const useAnswerStore = defineStore('answer', () => {
     }
   }
 
+  /**
+   * * Получить ответ
+   */
+  async function getAnswer(answerId: number) {
+    try {
+      const response = await AnswerService.getAnswer(answerId);
+      answer.value = response.data;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  /**
+   * * Получить ответы
+   */
+  async function getAnswers() {
+    try {
+      const userStore = useUserStore();
+      const role = userStore.user?.role;
+      if (!role) return;
+      if (!userStore.user || role != 'TEACHER') return;
+      const response = await AnswerService.getAnswers(userStore.user.id);
+      answers.value = response.data;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  /**
+   * * Поставить оценку
+   */
+  async function setGrade(answerId: number, grade: number) {
+    try {
+      const response = await AnswerService.setGrade(answerId, grade);
+      console.log(response);
+      const answer = answers.value?.find((answer) => answer.id == answerId);
+      if (!answer) return;
+      answer.grade = grade;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   return {
+    answer: readonly(answer),
     answers: readonly(answers),
     create,
+    getAnswers,
+    getAnswer,
+    setGrade,
   };
 });

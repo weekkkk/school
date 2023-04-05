@@ -7,6 +7,7 @@ const SubjectDto = require('./subject-dto');
 
 const TestDto = require('./test-dto');
 const ClassroomDto = require('./classroom-dto');
+const AnswerDto = require('./answer-dto');
 
 module.exports = {
   AdminDto,
@@ -16,4 +17,5 @@ module.exports = {
   SubjectDto,
   TestDto,
   ClassroomDto,
+  AnswerDto,
 };

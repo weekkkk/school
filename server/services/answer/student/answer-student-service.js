@@ -21,6 +21,8 @@ class AnswerStudentService {
 
     answerStudent.grade = grade;
 
+    await answerStudent.save();
+
     return answerStudent;
   }
 
