@@ -29,7 +29,7 @@ async function login() {
   await userStore
     .login(email.value, password.value)
     .then(() => {
-      router.push({ name: 'results' });
+      router.push({ name: 'main' });
     })
     .catch((e) => {
       console.log(e);

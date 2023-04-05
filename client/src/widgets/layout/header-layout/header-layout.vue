@@ -23,25 +23,61 @@ async function logout() {
   <div class="header-layout f fd-col">
     <header class="f jc-c fw-medium p-3 bg-default">
       <div class="container f ai-c jc-sb">
-        <p>Тестирование ЕГЭ</p>
+        <h4>Тестирование ЕГЭ</h4>
 
-        <NButton
-          v-if="!userStore.user"
-          :color="EColor.Brand"
-          :size="ESize.Small"
-          no-fill
-        >
-          Вход
-        </NButton>
-        <NButton
-          v-else
-          :color="EColor.Danger"
-          :size="ESize.Small"
-          no-fill
-          @click="logout"
-        >
-          Выход
-        </NButton>
+        <div class="f ai-c cg-3 rg-2 fw-wrap">
+          <RouterLink :to="{ name: 'main' }"> Главная </RouterLink>
+
+          <div
+            class="f cg-3 rg-2 fw-wrap"
+            v-if="userStore.user?.role == 'ADMIN'"
+          >
+            <RouterLink :to="{ name: 'tests' }"> Тесты </RouterLink>
+            <RouterLink :to="{ name: 'schools' }"> Школы </RouterLink>
+          </div>
+
+          <div
+            class="f cg-3 rg-2 fw-wrap"
+            v-if="userStore.user?.role == 'SCHOOL'"
+          >
+            <RouterLink :to="{ name: 'students' }"> Ученики </RouterLink>
+            <RouterLink :to="{ name: 'teachers' }"> Учителя </RouterLink>
+          </div>
+
+          <div
+            class="f cg-3 rg-2 fw-wrap"
+            v-if="userStore.user?.role == 'TEACHER'"
+          >
+            <RouterLink :to="{ name: 'classrooms' }"> Классы </RouterLink>
+          </div>
+
+          <div
+            class="f cg-3 rg-2 fw-wrap"
+            v-if="userStore.user?.role == 'STUDENT'"
+          >
+            <RouterLink :to="{ name: 'student-tests' }"> Тесты </RouterLink>
+            <RouterLink :to="{ name: 'answers' }"> Ответы </RouterLink>
+          </div>
+
+          <NButton
+            v-if="!userStore.user"
+            :color="EColor.Brand"
+            :size="ESize.Small"
+            no-fill
+            @click="router.push({ name: 'login' })"
+          >
+            Вход
+          </NButton>
+          <NButton
+            v-else
+            :color="EColor.Danger"
+            :size="ESize.Small"
+            no-fill
+            @click="logout"
+          >
+            Выход
+          </NButton>
+        </div>
       </div>
     </header>
 
@@ -60,6 +96,15 @@ async function logout() {
 .header-layout {
   width: 100%;
   flex-grow: 1;
+  header {
+    a {
+      color: var(--n-base);
+      text-decoration: none;
+      &.router-link-active {
+        color: var(--n-brand);
+      }
+    }
+  }
   .container {
     max-width: 1024px;
     flex-grow: 1;

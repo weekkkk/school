@@ -11,7 +11,7 @@ module.exports = class AnswerDto {
   constructor(answer, user, student, grade) {
     this.id = answer.id;
     this.student = new StudentDto(user, student);
-    this.file = answer.file;
+    this.file = `http://localhost:${process.env.PORT}/${answer.file}`;
     this.grade = grade;
   }
 };
