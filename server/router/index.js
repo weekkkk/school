@@ -10,13 +10,15 @@ const answerRouter = require('./answer-router');
 const authRouter = require('./auth-router');
 const subjectRouter = require('./subject-router');
 const resultRouter = require('./result-router');
+const materialRouter = require('./material-router');
 
 router.use('/result', resultRouter);
 router.use('/school', schoolRouter);
 router.use('/teacher', teacherRouter);
 router.use('/student', studentRouter);
 router.use('/classroom', classroomRouter);
-router.use('/test', testRouter);
+router.use('/test',testRouter);
+router.use('/material', materialRouter);
 router.use('/answer', answerRouter);
 router.use('/auth', authRouter);
 router.use('/subject', subjectRouter);

@@ -67,6 +67,12 @@ const Material = sequelize.define('material', {
   file: { type: DataTypes.STRING, unique: true },
 });
 /**
+ * * Материал предмет
+ */
+const MaterialSubject = sequelize.define('materialSubject', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+});
+/**
  * * Материал учителя
  */
 const TeacherMaterial = sequelize.define('teacherMaterial', {
@@ -148,6 +154,13 @@ const StudentAnswer = sequelize.define('studentAnswer', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   grade: { type: DataTypes.INTEGER },
 });
+
+Material.hasOne(MaterialSubject);
+MaterialSubject.belongsTo(Material);
+
+
+Subject.hasOne(MaterialSubject);
+MaterialSubject.belongsTo(Subject);
 
 User.hasOne(Token);
 Token.belongsTo(User);
@@ -242,6 +255,7 @@ module.exports = {
   TeacherClassroom,
   TeacherMaterial,
   TeacherSubject,
+  MaterialSubject,
   Test,
   TestSubject,
   Token,

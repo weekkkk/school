@@ -51,6 +51,7 @@ async function logout() {
           >
             <RouterLink :to="{ name: 'answers' }"> Ответы </RouterLink>
             <RouterLink :to="{ name: 'classrooms' }"> Классы </RouterLink>
+            <RouterLink :to="{ name: 'materials' }"> Материалы </RouterLink>
           </div>
 
           <div
@@ -58,6 +59,7 @@ async function logout() {
             v-if="userStore.user?.role == 'STUDENT'"
           >
             <RouterLink :to="{ name: 'student-tests' }"> Тесты </RouterLink>
+            <RouterLink :to="{ name: 'materials' }"> Материалы </RouterLink>
           </div>
 
           <NButton

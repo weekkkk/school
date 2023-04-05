@@ -10,3 +10,4 @@ export * from './student-tests-page';
 export * from './test-page';
 export * from './answers-page';
 export * from './answer-page';
+export * from './materials-page';

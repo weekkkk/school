@@ -73,6 +73,11 @@ const router = createRouter({
           name: 'answer',
           component: pages.AnswerPage,
         },
+        {
+          path: 'materials',
+          name: 'materials',
+          component: pages.MaterialsPage,
+        },
       ],
     },
   ],
