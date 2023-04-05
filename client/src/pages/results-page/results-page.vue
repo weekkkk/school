@@ -3,7 +3,7 @@ import { ResultFilter, AllResults } from '@/widgets';
 </script>
 
 <template>
-  <div class="f fd-col">
+  <div class="f fd-col rg-3">
     <ResultFilter />
 
     <AllResults />

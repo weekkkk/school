@@ -14,16 +14,16 @@ const props = defineProps({
       <th>Тест</th>
       <th>Оценка ответа</th>
     </tr>
-    <tr v-for="result in results" :key="result.id">
-      <th>
+    <tr v-for="result in results" :key="result.answer.id">
+      <td>
         {{ result.answer.student.name }}
-      </th>
-      <th>
+      </td>
+      <td>
         {{ result.test.name }}
-      </th>
-      <th>
+      </td>
+      <td>
         {{ result.answer.grade }}
-      </th>
+      </td>
     </tr>
   </table>
 </template>

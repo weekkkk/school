@@ -23,6 +23,7 @@ module.exports = class TeacherDto extends UserDto {
     this.id = teacher.id;
     this.userId = user.id;
     this.subject = new SubjectDto(subject);
+    if(school)
     this.schoolId = school.id
   }
 };

@@ -46,7 +46,7 @@ async function createSchool() {
         <NInput
           v-model="name"
           id="school-name"
-          placeholder="Введите имя варианта"
+          placeholder="Введите название"
         />
       </NLabel>
       <NLabel label="Email" id="school-email">

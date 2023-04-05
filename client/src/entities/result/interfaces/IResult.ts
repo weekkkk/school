@@ -6,10 +6,6 @@ import type { ITest } from '@/entities/test';
  */
 export interface IResult {
   /**
-   * * Ключ
-   */
-  id: number;
-  /**
    * * Тест
    */
   test: ITest;

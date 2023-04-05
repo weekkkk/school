@@ -6,7 +6,7 @@ const resultStore = useResultStore();
 
 <template>
   <ResultTable v-if="resultStore.results" :results="resultStore.results" />
-  <p v-else>Ничего не найдено</p>
+  <p v-else class="ta-c">Ничего не найдено</p>
 </template>
 
 <style lang="less" scoped></style>

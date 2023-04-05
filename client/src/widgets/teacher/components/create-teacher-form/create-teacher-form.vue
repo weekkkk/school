@@ -79,7 +79,7 @@ async function createTeacher() {
 
     <div class="f jc-fe">
       <NButton :color="EColor.Brand" @click="createTeacher">
-        Создать ученика
+        Создать учителя
       </NButton>
     </div>
   </form>

@@ -16,7 +16,7 @@ const resultStore = useResultStore();
       </NLabel>
     </div>
 
-    <div>
+    <div class="f jc-fe">
       <NButton :color="EColor.Brand" @click="resultStore.getResults">
         Поиск
       </NButton>

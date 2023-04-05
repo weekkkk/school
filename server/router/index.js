@@ -9,7 +9,9 @@ const testRouter = require('./test-router');
 const answerRouter = require('./answer-router');
 const authRouter = require('./auth-router');
 const subjectRouter = require('./subject-router');
+const resultRouter = require('./result-router');
 
+router.use('/result', resultRouter);
 router.use('/school', schoolRouter);
 router.use('/teacher', teacherRouter);
 router.use('/student', studentRouter);
