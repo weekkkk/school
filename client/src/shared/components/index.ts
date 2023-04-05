@@ -8,3 +8,5 @@ export * from './select';
 export * from './label';
 export * from './file';
 export * from './counter';
+
+export * from './modal';
