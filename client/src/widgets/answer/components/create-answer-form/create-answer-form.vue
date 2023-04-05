@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from 'vue-router';
 import { EColor, NButton, NFile, NInput, NLabel } from '@/shared';
 
 import { useAnswerStore } from '@/entities';
@@ -27,6 +27,16 @@ async function createAnswer() {
     file.value = undefined;
   });
 }
+
+onBeforeRouteUpdate(async (to, from, next) => {
+  await createAnswer();
+  next();
+});
+
+onBeforeRouteLeave(async (to, from, next) => {
+  await createAnswer();
+  next();
+});
 </script>
 
 <template>

@@ -106,6 +106,8 @@ async function logout() {
     }
   }
   .container {
+    position: relative;
+    overflow: hidden;
     max-width: 1024px;
     flex-grow: 1;
   }

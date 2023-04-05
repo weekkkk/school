@@ -13,7 +13,7 @@ if (!answerStore.answers) {
     v-if="answerStore.answers?.length"
     :answers="answerStore.answers"
   />
-  <p v-else>Ни один ученик не оставил ответа</p>
+  <p v-else class="ta-c">Ни один ученик не оставил ответа</p>
 </template>
 
 <style lang="less" scoped></style>

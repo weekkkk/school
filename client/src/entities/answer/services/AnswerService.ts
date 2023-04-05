@@ -7,9 +7,9 @@ export class AnswerService {
   /**
    * * Создать ответ
    */
-  static async create(classroomTestId: number, studentId: number, file: File) {
+  static async create(classroomTestId: number, studentId: number, file?: File) {
     const formData = new FormData();
-    formData.append('file', file);
+    if (file) formData.append('file', file);
     return $answer.post<IAnswer>(
       `/student/${studentId}/classroomTest/${classroomTestId}`,
       formData,

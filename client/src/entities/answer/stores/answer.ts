@@ -21,7 +21,7 @@ export const useAnswerStore = defineStore('answer', () => {
   /**
    * * Создать
    */
-  async function create(classroomTestId: number, file: File) {
+  async function create(classroomTestId: number, file?: File) {
     try {
       const userStore = useUserStore();
       const role = userStore.user?.role;
