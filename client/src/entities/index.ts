@@ -6,3 +6,4 @@ export * from './student';
 export * from './teacher';
 export * from './classroom';
 export * from './answer';
+export * from './result';

@@ -1,7 +1,13 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { ResultFilter, AllResults } from '@/widgets';
+</script>
 
 <template>
-  <h1>results</h1>
+  <div class="f fd-col">
+    <ResultFilter />
+
+    <AllResults />
+  </div>
 </template>
 
 <style lang="less" scoped></style>

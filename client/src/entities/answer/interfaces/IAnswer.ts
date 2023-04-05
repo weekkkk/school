@@ -13,7 +13,7 @@ export interface IAnswer {
    */
   grade: number;
   /**
-   * * Уникальный ключ предмета
+   * * Студент
    */
   student: IStudent;
 }

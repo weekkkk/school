@@ -32,6 +32,7 @@ async function logout() {
             class="f cg-3 rg-2 fw-wrap"
             v-if="userStore.user?.role == 'ADMIN'"
           >
+            <RouterLink :to="{ name: 'results' }"> Результаты </RouterLink>
             <RouterLink :to="{ name: 'tests' }"> Тесты </RouterLink>
             <RouterLink :to="{ name: 'schools' }"> Школы </RouterLink>
           </div>
